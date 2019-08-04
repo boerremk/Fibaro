@@ -1,0 +1,153 @@
+--[[
+%% autostart
+%% properties
+%% globals
+--]]
+
+local debug = true;
+local id = {"ID 1","ID 2"}; -- Seneye ID
+local user = "Seneye EMAIL";
+local pwd = "Seneye PASSWORD";
+local virtId = {409,411}; -- Koi vijver, Aquarium Jord
+local strStatus = {"No", "Yes"};
+local NA = "Not Available";
+local repeatTime = 60; -- in minutes
+
+local alarm = true; -- enable alarm
+local alarmId = {0,0,0,0} -- {nh3,ph,temp,outofwater}, 0 no check, 1 check
+local Remko = json.decode(fibaro:getGlobalValue("Remko")) -- Device to push to
+
+
+local function log(str) if debug then fibaro:debug(str); end; end
+
+local trigger = fibaro:getSourceTrigger()
+log(trigger['type'])
+
+function round(val, decimal)
+  if (decimal) then
+    if (val > 0) then
+      return math.floor( (val * 10^decimal) + 0.5) / (10^decimal)
+    else
+      return math.ceil( (val * 10^decimal) - 0.5) / (10^decimal)
+    end
+  else
+    if (val > 0) then
+      return math.floor(val+0.5)
+    else
+      return math.ceil(val-0.5)
+    end
+  end
+end
+
+function getData()
+for i = 1, #id do
+  local selfhttp = net.HTTPClient({timeout=2000})
+  selfhttp:request('https://api.seneye.com/v1/devices/'..id[i]..'?IncludeState=1&user='..user..'&pwd='..pwd, {
+    options={
+      headers =  {Accept = "application/json"},
+      method = 'GET',
+      timeout = 5000
+    },
+    success = function(status)
+      log('At ' .. os.date() .. ' - status = ' .. status.status);
+      if status.status == 200 then
+        log('At ' .. os.date() .. ' - status = ' .. status.data);
+        local response = json.decode(status.data);
+        
+        seneyeType = response.type; -- 1 = home, 2 = pond, 3 = reef
+  --      if debug then fibaro:debug(seneyeType); end
+            
+        fibaro:call(virtId[i], "setProperty", "ui.lblError.value", "Getting data, please wait...")
+        if not(response.status.out_of_water == null) then
+          fibaro:call(virtId[i], "setProperty", "ui.lblOutOfWater.value", strStatus[response.status.out_of_water+1])
+        end
+        temp = response.exps.temperature.curr.." "; -- workaround
+        fibaro:call(virtId[i], "setProperty", "ui.lblTemp.value", temp)
+        ph = response.exps.ph.curr.." "; -- workaround
+        fibaro:call(virtId[i], "setProperty", "ui.lblPH.value", ph)
+        nh3 = response.exps.nh3.curr.." "; -- workaround
+        fibaro:call(virtId[i], "setProperty", "ui.lblNH3.value", nh3)
+        if seneyeType == "2" or seneyeType == "3"
+        then
+          o2 = response.exps.o2.curr.." "; -- workaround
+          fibaro:call(virtId[i], "setProperty", "ui.lblO2.value", o2)
+        else
+          fibaro:call(virtId[i], "setProperty", "ui.lblO2.value", NA)
+        end
+        if seneyeType == "3"
+        then      
+          nh4 = response.exps.nh4.curr.." "; -- workaround
+          fibaro:call(virtId[i], "setProperty", "ui.lblNH4.value", nh4)
+          lux = response.exps.lux.curr.." "; -- workaround
+          fibaro:call(virtId[i], "setProperty", "ui.lblLux.value", lux)
+          fibaro:call(virtId[i], "setProperty", "ui.lblPar.value", tostring(response.exps.par.curr))
+          fibaro:call(virtId[i], "setProperty", "ui.lblKelvin.value", tostring(response.exps.kelvin.curr))
+        else
+          fibaro:call(virtId[i], "setProperty", "ui.lblNH4.value", NA)
+          lux = response.exps.light.curr.." "; -- workaround
+          fibaro:call(virtId[i], "setProperty", "ui.lblLux.value", lux)
+          fibaro:call(virtId[i], "setProperty", "ui.lblPar.value", NA)
+          fibaro:call(virtId[i], "setProperty", "ui.lblKelvin.value", NA)
+        end
+        fibaro:call(virtId[i], "setProperty", "ui.lblLastRead.value", os.date("%c", response.status.last_experiment))
+        fibaro:call(virtId[i], "setProperty", "ui.lblSlideExp.value", os.date("%c", response.status.slide_expires))
+        fibaro:call(virtId[i], "setProperty", "ui.lblSlideSerial.value", response.status.slide_serial)        
+        if response.status.slide_expires then fibaro:call(virtId[i], "setProperty", "ui.lblDaysLeft.value", round((os.difftime(response.status.slide_expires, os.time())/86400))) end
+        fibaro:call(virtId[i], "setProperty", "ui.lblLastUpdate.value", os.date("%c"))
+        fibaro:call(virtId[i], "setProperty", "ui.lblError.value", "");
+        if alarm then
+          if alarmId[1] == 1 then
+            if response.exps.nh3.status == "1" then
+              fibaro:call(Remko["phoneid"], "sendPush", "Seneye: NH3 to HIGH")
+              log("Seneye: NH3 too high!");
+            end
+          end
+          if alarmId[2] == 1 then
+            if response.exps.ph.status == "1" then
+              fibaro:call(Remko["phoneid"], "sendPush", "Seneye: PH to low!")
+              log("Seneye: PH warning!");
+            end
+          end
+          if alarmId[3] == 1 then
+            if response.exps.temperature.status == "1" then
+              fibaro:call(Remko["phoneid"], "sendPush", "Seneye: Temperature warning!")
+              log("Seneye: Temperature warning!");
+            end
+          end
+          if alarmId[4] == 1 then
+            if tonumber(response.status.out_of_water) == 1 then
+             -- fibaro:call(Remko["phoneid"], "sendPush", "Seneye: Out Of Water!")
+              log("Seneye: Out Of Water!");
+            end
+          end
+        end
+      else
+        fibaro:call(virtId[i], "setProperty", "ui.lblError.value", "Error getting data")
+        print ("failed");
+        print(status.data);
+      end
+    end,
+    error = function(error)
+      fibaro:call(virtId[i], "setProperty", "ui.lblError.value", "Error getting data")
+      print "ERROR"
+      print(error)
+    end
+  })
+end
+  log("received data");
+--  if trigger['type'] == "autostart" then setTimeout(getData, repeatTime * 60 * 1000); end
+end
+
+--if trigger['type'] == "autostart"
+--then
+  -- check script instance count in memory 
+--  if (tonumber(fibaro:countScenes()) > 1) then 
+--    log("Script already running."); 
+--    fibaro:abort(); 
+--  end
+--  print("HC2 start script at " .. os.date());
+--  getData();
+--elseif trigger['type'] == "other"
+--then
+getData();
+--end
