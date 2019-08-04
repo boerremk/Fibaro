@@ -1,4 +1,4 @@
-Weeknumber
+<h1>Weeknumber</h1>
 
 Simpel virtual device that displays the number of the week :)
 
