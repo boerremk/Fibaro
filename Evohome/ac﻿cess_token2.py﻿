@@ -1,0 +1,52 @@
+#!/usr/bin/python
+
+import urllib
+import urllib2
+import json
+import cgi
+
+form = cgi.FieldStorage()
+if form.getvalue('Username'):
+	USERNAME = form.getvalue('Username')
+else:
+	USERNAME = 'your@email.com'
+
+if form.getvalue('Password'):
+	PASSWORD = form.getvalue('Password')
+else:
+	PASSWORD = 'yourpassword'
+
+url = 'https://tccna.honeywell.com/Auth/OAuth/Token'
+headers = {
+								 'Authorization':       'Basic NGEyMzEwODktZDJiNi00MWJkLWE1ZWItMTZhMGE0MjJiOTk5OjFhMTVjZGI4LTQyZGUtNDA3Yi1hZGQwLTA1OWY5MmM1MzBjYg==',
+								 'Accept': 'application/json, application/xml, text/json, text/x-json, text/javascript, text/xml'
+}
+data = {
+								 'Content-Type':        'application/x-www-form-urlencoded; charset=utf-8',
+								 'Host':        'rs.alarmnet.com/',
+								 'Cache-Control':'no-store no-cache',
+								 'Pragma':      'no-cache',
+								 'grant_type':  'password',
+								 'scope':       'EMEA-V1-Basic EMEA-V1-Anonymous EMEA-V1-Get-Current-User-Account',
+								 'Username':    USERNAME,
+								 'Password':    PASSWORD,
+								 'Connection':  'Keep-Alive'
+}
+
+# Define the url
+
+data = urllib.urlencode(data)
+
+# Create the Request.
+request = urllib2.Request(url)
+
+request.add_data(data)
+
+request.add_header('Accept', 'application/json, application/xml, text/json, text/x-json, text/javascript, text/xml')
+request.add_header('Authorization', 'Basic NGEyMzEwODktZDJiNi00MWJkLWE1ZWItMTZhMGE0MjJiOTk5OjFhMTVjZGI4LTQyZGUtNDA3Yi1hZGQwLTA1OWY5MmM1MzBjYg==')
+
+# Getting the response
+response = urllib2.urlopen(request)
+
+print "Content-type: text/html\n\n"
+print response.read()
