@@ -19,10 +19,10 @@ Unifi Network API - to check presence of family memmbers
 Created by Remko de Boer
 
 Description:
-	API to check presence of famly members
+	API to check presence of family members
 
 Remarks:
-  Looks like the sitename is alsways default
+  Looks like the sitename is always default
 
 Prerequisite:
   Global variable PresentState, to set home or away status
