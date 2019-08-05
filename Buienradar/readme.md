@@ -1,6 +1,6 @@
 # Buienradar
 
-$ Installation:
+Installation:
 
 In HC2 go to:
 - Devices
