@@ -16,14 +16,12 @@ Installation:
   - Set the scene to Manual
   - Use the PostNL API.png icon as scene icon
   - Set the debug on true 
-  - Run the scene once to verify the connection and to make sure the credentials are correct
-  - If the log is okay set the debug mode to false
 
 - Virtual Device
   - Create a Virtual Device (devices -> add device -> Import VD) using the file: PostNL.vfib
   - Change the ICON to the PostNL.png
   - Select the id of the scene as TCP port
-
-
+  - Run the scene once to verify the connection and to make sure the credentials are correct
+  - If the log is okay go back to the scene and set the debug mode to false
 
 You are ready to go!
