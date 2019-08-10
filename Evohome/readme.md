@@ -5,12 +5,12 @@ With Fibaro-Evohome you can use your Fibaro Homecenter 2 to control your Honeywe
 Original posting:
 http://forum.fibaro.com/index.php?/topic/15232-honeywell-evohome/?p=83442
 
-You need:
+## You need:
 - Evohome with color screen and Internet gateway (RFG100) or Evohome with wifi
 - Evohome account
 - Fibaro Homecenter 2
 
-Installing
+## Installing
 - Create a Variable (Panels / Variables Panel): EvohomeAPI
 - Create a LUA scene "Evohome API"
 - Paste the code from evohome-api.txt
@@ -41,13 +41,13 @@ Installing
 
  
  
-!!IMPORTANT!!
+## !!IMPORTANT!!
 Honeywell changed there security to there API some tome ago so you will receive the following error:
 LuaEnvironment: /home/server/bamboo-agent-home/xml-data/build-dir/HC-LE153-JOB1/LuaEngine/vendor/avhttp/avhttp/cookie.hpp:636: bool avhttp::cookies::parse_cookie_string(const string&, std::vector&): Assertion `0' failed.
 
 I have created two workarounds, you only have to use 1:
 - Change the line "url= 'https://tccna.honeywell.com/Auth/OAuth/Token'" in the function "GetOAuth" of the scene "Evohome API" to:
   url = ' ' http://boerremk.nl/cgi-bin/access_token2.py'
-- In the Evohome zip there is a file called access_token2.py, install this on a local webserver and cange the line "url= 'https://tccna.honeywell.com/Auth/OAuth/Token'" in the function "GetOAuth" of the scene "Evohome API" to:
+- In the repository there is a file called access_token2.py, install this on a local webserver and cange the line "url= 'https://tccna.honeywell.com/Auth/OAuth/Token'" in the function "GetOAuth" of the scene "Evohome API" to:
 url = '<webserver-ip>/access_token2.py'
 
