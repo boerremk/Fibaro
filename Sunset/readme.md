@@ -12,3 +12,6 @@ Sunset/Sunrise is a simpel virtual Device that shows the time of sunset and sunr
 - Assign to room
 
 That is it!
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
