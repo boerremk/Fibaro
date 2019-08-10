@@ -2,7 +2,7 @@
 Ring API is scene that checks motion and ding events.
 
 ## Remarks
-- None
+- Needs a Ring device
 
 ## Installation
 ##### In HC2:
