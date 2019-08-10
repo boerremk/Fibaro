@@ -19,7 +19,7 @@ Seneye is a virtual device and scene that display Seneye data in Homecenter 2
 local id = {"ID1","IDX"}; -- Seneye ID, separated bij comma
 local user = "SENEYE EMAIL";
 local pwd = "SENEYE PASSWORD";
-local virtId = {409,411}; -- ID of Virtual device (needs next step!
+local virtId = {409,411}; -- ID of Virtual device (needs next step!)
 ```
 - Save
 - Change icon
