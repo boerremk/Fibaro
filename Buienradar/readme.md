@@ -16,3 +16,6 @@ In HC2 go to:
 - Assign to a room
 
 That is it!
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
