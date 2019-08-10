@@ -10,6 +10,10 @@ Ring API is scene that checks motion and ding events.
 - Add secene
 - Add scene in lua
 - Paste the lua code
+'''lua
+local username = "RING EMAIL"
+local password = "RING PASSWORD"
+'''
 - Give the scene a name
 - Assign it to a room
 - Save
