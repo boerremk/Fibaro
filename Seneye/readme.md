@@ -8,7 +8,7 @@ Seneye is a virtual device and scene that display Seneye data in Homecenter 2
 ## Installation
 
 ##### Scene
-- Go the scens
+- Go the Scenes
 - Add scene
 - Add scene in lua
 - Set name "Seneye API"
