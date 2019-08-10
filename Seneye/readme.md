@@ -25,6 +25,7 @@ local virtId = {409,411}; -- ID of Virtual device (needs next step!)
 - Change icon
 
 ##### Virtual Device
+Create a virtual device for every Seneye you own.
 - Go to Devices
 - Add or remove device
 - Import virtual device
