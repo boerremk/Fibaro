@@ -2,11 +2,12 @@
 
 Simpel virtual device that displays the number of the week :)
 
-<b>Installation:</b>
+## Installation:
+###### In HC2:
 - Devices
 - Add or remove devices
 - Import virtual device
-
-You can now give it a name, assign it to the right room and add the icon to it.
+- Change icon
+- Assign to room
 
 That is it!
