@@ -51,3 +51,5 @@ I have created two workarounds, you only have to use 1:
 - In the repository there is a file called access_token2.py, install this on a local webserver and cange the line "url= 'https://tccna.honeywell.com/Auth/OAuth/Token'" in the function "GetOAuth" of the scene "Evohome API" to:
 url = '<webserver-ip>/access_token2.py'
 
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
