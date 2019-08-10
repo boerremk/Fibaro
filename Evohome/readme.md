@@ -1,6 +1,6 @@
-# Fibaro-Evohome
+# Evohome
 
-With Fibaro-Evohome you can use your Fibaro Homecenter 2 to control your Honeywell Evohome system
+With Evohome you can use your Fibaro Homecenter 2 to control your Honeywell Evohome system
 
 Original posting:
 http://forum.fibaro.com/index.php?/topic/15232-honeywell-evohome/?p=83442
