@@ -14,5 +14,5 @@ username = {
 ```
 
 ## TODO
-[] readme.md for every scene or device
-[] Dependancies
+- [ ] readme.md for every scene or device
+- [ ] Dependancies
