@@ -2,7 +2,7 @@
 
 Watchdog is a Homecenter 2 scene that checks the debug windows of scenes and virtual devices for errors. It will send a message if an error is found.
 
-## Remark
+## Requirements
 - Depends on the sendMessage scene
 
 ## Installation
