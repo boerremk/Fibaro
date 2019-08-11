@@ -14,6 +14,8 @@ username = {
  
  FIBARO USERID: http://<IP OF HC2>/api/users
  FIBARO PHONEID: http://<IP OF HC2>/api/iosDevices
+ 
+ Use the createUser scene to create users, just fill in te information and run the scene.
 ```
 
 ## TODO
