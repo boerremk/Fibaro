@@ -1,7 +1,7 @@
 # Fibaro
 Scenes, VD and other for the Fibaro Homecenter
 
-## Remark
+## Requirements
 - Almost all scenes and virtual devices depends on the sendMessage scene
 - Almost all scenes and virtual devices depends on a global variable for every user in your household with the following information:
 ```lua
