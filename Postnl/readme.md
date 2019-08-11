@@ -36,7 +36,7 @@ This is a Fibaro Virtual Device (VD) that checks the status of the PostNL (Dutch
   - Go to scene and check log for error
   - If no errors shown, set debug to false in the scene
 
-That is ir!
+That is it!
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
