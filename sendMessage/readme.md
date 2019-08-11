@@ -3,10 +3,10 @@
 sendMessage is a Homecenter 2 scene to send mail, Fibaro push, Pushover*, Pushover Glances* or Telegram* messages.
 
 ## Requirements
-- Pushover account
-- Pushover Token and UserID
-- Telegram account
-- Telegram Token and ChatID
+- Pushover account*
+- Pushover Token and UserID*
+- Telegram account*
+- Telegram Token and ChatID*
 
 # Installation
 ##### In HC2:
@@ -36,6 +36,9 @@ local user = tonumber(fibaro:getGlobalValue("user"))
 local sendMessageID = tonumber(fibaro:getGlobalValue("sendMessage"))
 fibaro:startScene(sendMessageID,{{true, {user["id"]}},{false},{false},{true, "100"},{false},"Titel","Message"})
 ```
-
-
 That is it
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
+
+_* Optional_
