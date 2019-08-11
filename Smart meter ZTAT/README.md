@@ -9,7 +9,7 @@ In HC2
 5. Add icon
 
 ## Authors and acknowledgment
-[Alexander Troost](https://github.com/atroost)
+Created and maintained by [Alexander Troost](https://github.com/atroost)
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
