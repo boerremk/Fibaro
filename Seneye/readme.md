@@ -1,7 +1,7 @@
 # Seneye
 Seneye is a virtual device and scene that display Seneye data in Homecenter 2
 
-## Rewuierements
+## Requierements
 - Seneye account
 - Depends on sendMessage to send alerts
 
