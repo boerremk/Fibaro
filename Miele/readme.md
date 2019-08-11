@@ -1,10 +1,10 @@
 # Miele
 
-Miele ia a Homecenter 2 scene and a virtual deivice that shows information of a Miele washing machine.
+Miele is a Homecenter 2 scene and a virtual deivice that shows information of a Miele washing machine.
 
 ## Requirements
 - Miele account
-- At least one Miele devices
+- At least one Miele devices (for now it only support a washing machine)
 
 ## Installation
 ##### Scene
