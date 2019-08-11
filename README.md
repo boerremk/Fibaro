@@ -3,7 +3,7 @@ Scenes, VD and other for the Fibaro Homecenter
 
 ## Requirements
 - Almost all scenes and virtual devices depends on the sendMessage scene
-- Almost all scenes and virtual devices depends on a global variable for every user in your household 
+- Almost all scenes and virtual devices depends on a global variable for every user in your household\
   **Use the createUser scene to create users, just fill in te information and run the scene.**
 
 ## TODO
