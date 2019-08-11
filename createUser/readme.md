@@ -20,6 +20,7 @@ local username = {
 ```
 Go to http://<IP OF HC2>/api/users to find the FIBARO USERID
 Go to http://<IP OF HC2>/api/iosDevices to find the FIBARO PHONEID
+
 6. Name the scene 'createUser'
 7. Assign to room
 8. Save
