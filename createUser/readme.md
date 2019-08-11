@@ -11,7 +11,7 @@ In HC2:
 5. change lines:
 ```
 local username = {
-  ["username"] = "Test",
+  ["username"] = "NAME OF USER",
   ["present"] = 1,
   ["mac"] = "MAC ADDRESS",
   ["userid"] = FIBARO USERID,
