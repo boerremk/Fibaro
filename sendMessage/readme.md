@@ -10,7 +10,7 @@ sendMessage is a Homecenter 2 scene to send mail, Fibaro push, Pushover*, Pushov
 
 # Installation
 ##### In HC2:
-- Go to Scnes
+- Go to Scenes
 - Add scene
 - Add scene in lua
 - Paste code
@@ -19,7 +19,7 @@ sendMessage is a Homecenter 2 scene to send mail, Fibaro push, Pushover*, Pushov
 local Pushover_tkn = Pushover Token
 local Pushover_usr = Pushover user
 local PushoverGlances_tkn = Pushover Glances Token
-local PushoverGlances_usr = Pushiver Glamnces user
+local PushoverGlances_usr = Pushover Glances user
 local Telegram_token = Telegram Token
 local Telegram_chat_id = Telegram Chat ID
 ```
