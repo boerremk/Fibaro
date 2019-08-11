@@ -8,5 +8,8 @@ In HC2
 4. Save
 5. Add icon
 
+## Authors and acknowledgment
+[Alexander Troost](https://github.com/atroost)
+
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
