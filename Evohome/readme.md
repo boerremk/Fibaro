@@ -46,10 +46,12 @@ Honeywell changed there security to there API some tome ago so you will receive 
 LuaEnvironment: /home/server/bamboo-agent-home/xml-data/build-dir/HC-LE153-JOB1/LuaEngine/vendor/avhttp/avhttp/cookie.hpp:636: bool avhttp::cookies::parse_cookie_string(const string&, std::vector&): Assertion `0' failed.
 
 I have created two workarounds, you only have to use 1:
-        1. Change the line "url= 'https://tccna.honeywell.com/Auth/OAuth/Token'" in the function "GetOAuth" of the scene "Evohome API" to:
+```
+1. Change the line "url= 'https://tccna.honeywell.com/Auth/OAuth/Token'" in the function "GetOAuth" of the scene "Evohome API" to:
   url = ' ' http://boerremk.nl/cgi-bin/access_token2.py'
-        2. In the repository there is a file called access_token2.py, install this on a local webserver and cange the line "url= 'https://tccna.honeywell.com/Auth/OAuth/Token'" in the function "GetOAuth" of the scene "Evohome API" to:
+2. In the repository there is a file called access_token2.py, install this on a local webserver and cange the line "url= 'https://tccna.honeywell.com/Auth/OAuth/Token'" in the function "GetOAuth" of the scene "Evohome API" to:
 url = '<webserver-ip>/access_token2.py'
+```
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
