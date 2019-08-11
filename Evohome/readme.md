@@ -12,6 +12,8 @@ http://forum.fibaro.com/index.php?/topic/15232-honeywell-evohome/?p=83442
 
 ## Installing
 - Create a Variable (Panels / Variables Panel): EvohomeAPI
+
+##### Scene
 - Create a LUA scene "Evohome API"
 - Paste the code from evohome-api.txt
 - Change the following in the scene:
@@ -23,23 +25,27 @@ local main_id = {1376}; -- ID of Evohome VD of all your locations -- see below "
 local zones_name = {"Room1","Room2","Room2","Bathroom","Hallway","Master","Kidsroom","Kitchen"}; -- Name of zones of all locations, DHW should be named "" (defined in Evohome, case-sensitive!)
 local zones_id = {1219,1377,1222,1221,1218,1217,1220,1223}; -- ID of zones VD of all locations -- see below "Evohome_2.0_-_Zone.vfib"
 ```
-  *!!REMEMBER THE ID OF THE SCENE!!*
+**!!REMEMBER THE ID OF THE SCENE!!**
 
+##### Virtual devices (zones)
 - Import "Evohome_2.0_-_Zone.vfib" for every zone you need, you have to set/edit:
   The name off the VD should match the name of the zone (case-sensitive!)
   IP Address of the virtual device with the location ID of youe Evohome system (default = 0) (See Evohome 2.0.png)
   TCP port of the virtual device with the ID of the scene (See Evohome 2.0.png)
-  !!REMEMBER THE ID OF THE VD, THIS HAS TO BE PUT IN THE SCENE, SEE ABOVE!!
+**REMEMBER THE ID OF THE VD, THIS HAS TO BE PUT IN THE SCENE, SEE ABOVE**
+  
+##### Virtual device (main)
 - Import "Evohome_2.0.vfib" (only once!), you have to set/edit:
   IP Address of the virtual device with the location ID of youe Evohome system (default = 0) (See Evohome 2.0.png)
   TCP port of the virtual device with the ID of the scene (See Evohome 2.0.png)
   The values will be update every 30 minutes (you can change this in the main loop)
-  !!REMEMBER THE ID OF THE VD, THIS HAS TO BE PUT IN THE SCENE, SEE ABOVE!!
+**REMEMBER THE ID OF THE VD, THIS HAS TO BE PUT IN THE SCENE, SEE ABOVE**
+  
+##### Virtual device (Hotwater)  
 - Import "Evohome_2.0_-_DHW.vfib" for every DHW you need, you have to set/edit:
   IP Address of the virtual device with the location ID of youe Evohome system (default = 0) (See Evohome 2.0.png)
   TCP port of the virtual device with the ID of the scene (See Evohome 2.0.png)
-  !!REMEMBER THE ID OF THE VD, THIS HAS TO BE PUT IN THE SCENE, SEE ABOVE!!
-  Warning: Evohome-DHW is not tested, because I don't own this device
+**REMEMBER THE ID OF THE VD, THIS HAS TO BE PUT IN THE SCENE, SEE ABOVE**
 
  
  
