@@ -1,7 +1,7 @@
 # Batterylevel
 Batterylevel sends an email if a device needs a replacement of the battery.
 
-## Remarks
+## Requirements
 - Depends on sendMessage scene
 
 ## Installation
