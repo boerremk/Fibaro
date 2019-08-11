@@ -5,7 +5,7 @@ With Evohome you can use your Fibaro Homecenter 2 to control your Honeywell Evoh
 Original posting:
 http://forum.fibaro.com/index.php?/topic/15232-honeywell-evohome/?p=83442
 
-## You need:
+## Requirements
 - Evohome with color screen and Internet gateway (RFG100) or Evohome with wifi
 - Evohome account
 - Fibaro Homecenter 2
