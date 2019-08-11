@@ -8,7 +8,7 @@ In HC2:
 2. Add scenes
 3. Add scene in lua
 4. Paste lua code
-5. change lines:
+5. Change lines:
 ```
 local username = {
   ["username"] = "NAME OF USER",
