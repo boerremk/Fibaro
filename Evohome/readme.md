@@ -15,6 +15,7 @@ http://forum.fibaro.com/index.php?/topic/15232-honeywell-evohome/?p=83442
 - Create a LUA scene "Evohome API"
 - Paste the code from evohome-api.txt
 - Change the following in the scene:
+```
     local username = "EMAIL" -- Evohome username
     local password = "PASSWORD" -- Evohome password
     local locationID = 0; -- ID of Evohome location, starting with 0 (default)
@@ -22,6 +23,7 @@ http://forum.fibaro.com/index.php?/topic/15232-honeywell-evohome/?p=83442
     local zones_name = {"Room1","Room2","Room2","Bathroom","Hallway","Master","Kidsroom","Kitchen"}; -- Name of zones of all locations, DHW should be named "" (defined in Evohome, case-sensitive!)
     local zones_id = {1219,1377,1222,1221,1218,1217,1220,1223}; -- ID of zones VD of all locations -- see below 
     "Evohome_2.0_-_Zone.vfib"
+```
     !!REMEMBER THE ID OF THE SCENE!!
 - Import "Evohome_2.0_-_Zone.vfib" for every zone you need, you have to set/edit:
   The name off the VD should match the name of the zone (case-sensitive!)
