@@ -67,8 +67,8 @@ url = '<webserver-ip>/access_token2.py'
 ```
 
 ## Authors and acknowledgment
-https://github.com/watchforstock/evohome-client\
-http://www.automatedhome.co.uk/vbulletin/showthread.php?3863-Decoded-EvoHome-API-access-to-control-remotely
+- https://github.com/watchforstock/evohome-client
+- http://www.automatedhome.co.uk/vbulletin/showthread.php?3863-Decoded-EvoHome-API-access-to-control-remotely
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
