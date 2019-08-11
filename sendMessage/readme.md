@@ -1,6 +1,12 @@
 # sendMessage
 
-sendMessage is a Homecenter 2 scene to send mail, Fibaro push, Pushover, Pushover Glances or Telegram messages.
+sendMessage is a Homecenter 2 scene to send mail, Fibaro push, Pushover*, Pushover Glances* or Telegram* messages.
+
+## Requirements
+- Pushover account
+- Pushover Token and UserID
+- Telegram account
+- Telegram Token and ChatID
 
 # Installation
 ##### In HC2:
