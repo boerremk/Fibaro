@@ -30,3 +30,6 @@ Go to http://<IP OF HC2>/api/iosDevices to find the FIBARO PHONEID
 For every user you want to add you have to follow step 5-10 (you can skip step 9)
 
 That is it!
+
+## Contributing
+Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
