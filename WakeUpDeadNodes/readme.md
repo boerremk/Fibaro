@@ -2,9 +2,8 @@
 
 WakeUpDeadNodes is a scene that periodically check if there are deadnodes in the system. It will try to wake the device up and send a message (max. 5) of the dead nodes.
 
-## Remarks:
+## Requirements:
 - For sending of a message it depends on sendMessage scene
-
 
 ## Installation:
 
