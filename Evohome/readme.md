@@ -43,7 +43,9 @@ http://forum.fibaro.com/index.php?/topic/15232-honeywell-evohome/?p=83442
  
 ## !!IMPORTANT!!
 Honeywell changed there security to there API some tome ago so you will receive the following error:
+```
 LuaEnvironment: /home/server/bamboo-agent-home/xml-data/build-dir/HC-LE153-JOB1/LuaEngine/vendor/avhttp/avhttp/cookie.hpp:636: bool avhttp::cookies::parse_cookie_string(const string&, std::vector&): Assertion `0' failed.
+```
 
 I have created two workarounds, you only have to use 1:
 ```
