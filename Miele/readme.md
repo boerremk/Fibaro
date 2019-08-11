@@ -4,6 +4,7 @@ Miele is a Homecenter 2 scene and a virtual deivice that shows information of a 
 
 ## Requirements
 - Miele account
+- Miele client_id and client_secret
 - At least one Miele devices (for now it only support a washing machine)
 
 ## Installation
