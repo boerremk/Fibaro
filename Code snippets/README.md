@@ -4,7 +4,7 @@ Here you find some code snippets, that can be used in scenes and virtual devices
 - Check script instance count in memory 
 ```
 if (tonumber(fibaro:countScenes()) > 1) then 
-  log("Script already running.");
+  fibaro:debug("Script already running.");
   fibaro:abort(); 
 end
 ```
