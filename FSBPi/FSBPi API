@@ -1,0 +1,213 @@
+--[[
+%% properties
+%% events
+%% globals
+--]]
+
+local debug = false
+local password = "FSB PASSWORD"
+local username = json.decode(fibaro:getGlobalValue("Remko"))
+local sendMessageID = tonumber(fibaro:getGlobalValue("sendMessage"))
+
+--- Main code
+
+local function log(str) if debug then fibaro:debug(tostring(str)); end; end
+local function errorlog(str) fibaro:debug("<font color='red'>"..tostring(str).."</font>"); end
+
+function parseHTMLTable(H)
+  local table={}
+  local n=0
+  for r in H:gmatch("<tr>(.-)</tr>") do
+    ---log(r)
+    n=n+1
+    table[n]={}
+    
+    local k=0
+    for d in r:gmatch(">(.-)</td>") do
+      ---log(d)
+      k=k+1
+      table[n][k]=d
+    end
+  end
+  return table
+end
+
+function getDataFSB(cookie,virtID,IP,version,method)
+  local strStatus = {"Uit", "Aan"};
+  local strDeksel = {"Dicht", "Open"};
+  log("http://"..IP.."/"..version.."/ajax.php?action=data")
+  http:request("http://"..IP.."/"..version.."/ajax.php?action=data", { 
+    options = { 
+      method = 'GET', 
+      headers = {
+        ["Cookie"] = cookie
+	  },
+      timeout = 5000
+    }, 
+    success = function(status)
+      log(status.status)
+      log(status.data)
+      if status.status == 200 then
+        jsonTable = json.decode(status.data)
+        if jsonTable.error == 0 then
+          fibaro:call(virtID, "setProperty", "ui.lblError.value", "Getting data, please wait...")
+          if tonumber(jsonTable.dt.installation) ~= 1 then
+            fibaro:startScene(sendMessageID,{{true, {username["phoneid"]}},{false},{false},{true, "100"},{false},"FSB error","Status error!"})
+            --message("FSB error","Status error!")
+          end
+          fibaro:call(virtID, "setProperty", "ui.lblStatus.value", strStatus[tonumber(jsonTable.dt.installation) + 1]); 
+          fibaro:call(virtID, "setProperty", "ui.lblWatertemperatuur.value", jsonTable.dt.temp.." °C"); 
+          if tonumber(jsonTable.dt.waterlevel) < tonumber(jsonTable.dt.pumplevel) then
+            fibaro:startScene(sendMessageID,{{true, {username["phoneid"]}},{false},{false},{true, "100"},{false},"FSB error","Water level lower then pump level!"})
+            --message("FSB error","Water level lower then pump level!")
+          end
+          fibaro:call(virtID, "setProperty", "ui.lblWaterniveau.value", jsonTable.dt.waterlevel.." ("..jsonTable.dt.trommellevel..") cm"); 
+          if tonumber(jsonTable.dt.flow) < 1 then
+      --      fibaro:startScene(sendMessageID,{{false, {username["phoneid"]}},{true, {2}},{false},{false, "100"},{false},"FSB error","Flow too low!"})
+            --message("FSB error","Flow too low!")
+          end
+          fibaro:call(virtID, "setProperty", "ui.lblFlow.value", jsonTable.dt.flow.." m3"); 
+          if jsonTable.dt.maxflowvalue ~= nil and jsonTable.dt.flowerrorvalue ~= nil then
+            if tonumber(jsonTable.dt.maxflowvalue) > tonumber(jsonTable.dt.flowerrorvalue) then
+              --message("FSB error", "Stroomwaarde too high!")
+              fibaro:startScene(sendMessageID,{{true, {username["phoneid"]}},{false},{false},{true, "100"},{false},"FSB error","Stroomwaarde too high!"})
+            end    
+            fibaro:call(virtID, "setProperty", "ui.lblStroomwaarde.value", jsonTable.dt.maxflowvalue.." ("..jsonTable.dt.flowerrorvalue..")");
+          else
+            fibaro:call(virtID, "setProperty", "ui.lblStroomwaarde.value", "S1 not entered!");
+          end
+          fibaro:call(virtID, "setProperty", "ui.lblUVC.value", strStatus[tonumber(jsonTable.dt.uv) + 1].." ("..jsonTable.dt.uvtime.." uur)"); 
+          if tonumber(jsonTable.dt.pondpump) ~= 1 then
+            fibaro:startScene(sendMessageID,{{true, {username["phoneid"]}},{false},{false},{true, "100"},{false},"FSB error","Pump is off!"})
+            --message("FSB error", "Pump is off!")
+          end
+          fibaro:call(virtID, "setProperty", "ui.lblVijverpomp.value", strStatus[tonumber(jsonTable.dt.pondpump) + 1].." ("..jsonTable.dt.ps1.."%)"); 
+          fibaro:call(virtID, "setProperty", "ui.lblDeksel.value", strDeksel[tonumber(jsonTable.dt.filterlid) + 1]); 
+          if tonumber(jsonTable.dt.airpump) ~= 1 then
+            fibaro:startScene(sendMessageID,{{true, {username["phoneid"]}},{false},{false},{true, "100"},{false},"FSB error","Airpump is off!"})
+            --message("FSB error", "Air pump is off!")
+          end
+          fibaro:call(virtID, "setProperty", "ui.lblLuchtpomp.value", strStatus[tonumber(jsonTable.dt.airpump) + 1]); 
+          local spoelTijden = parseHTMLTable(jsonTable.sp)
+          local overviewST = ""
+          for i=1,#spoelTijden do
+            overviewST = overviewST .. spoelTijden[i][4].."<br/>"
+          end
+            log(spoelTijden[1][4])
+          fibaro:call(virtID, "setProperty", "ui.lblLaatsteSpoeltijd.value", spoelTijden[1][4]); 
+          fibaro:call(virtID, "setProperty", "ui.lblSpoeltijden.value", overviewST); 
+          local alarmen = parseHTMLTable(jsonTable.alarms)
+          local overviewA = ""
+          local alarm = false
+          for j=1,#alarmen do
+            log(alarmen[j][2])
+            if alarmen[j][1] ~= nil and alarmen[j][1] ~= "" then
+              alarm = true
+              overviewA = overviewA .. alarmen[j][2].."<br/>"
+            end
+          end
+          if alarm then
+            fibaro:startScene(sendMessageID,{{true, {Remko["phoneid"]}},{false},{false},{true, "100"},{false},"FSB error","overviewA"})
+            --message("FSB error", overviewA)
+          end
+          fibaro:call(virtID, "setProperty", "ui.lblAlarm.value", overviewA);
+          fibaro:call(virtID, "setProperty", "ui.lblLastUpdate.value", os.date("%c"))
+          fibaro:call(virtID, "setProperty", "ui.lblError.value", "")
+        else
+          errorlog("Error geting data: " .. status.data)
+          fibaro:call(virtID, "setProperty", "ui.lblError.value", "Error getting data")
+        end
+      else
+        errorlog("Error geting data: " .. status.status)
+        fibaro:call(virtID, "setProperty", "ui.lblError.value", "Error getting data")
+      end
+    end,
+    error = function(err) 
+      errorlog(err) 
+    end 
+  })
+end
+
+function setParameter(cookie, virtID, IP, version, method, level)
+  log(level)
+  if method == "pondpump" then
+    if level == "60" then parameter = "ps1b1"
+    elseif level == "70" then parameter = "ps1b2"
+    elseif level == "80" then parameter = "ps1b3"
+    elseif level == "90" then parameter = "ps1b4"
+    else parameter = "ps1b5"
+    end
+  else
+    parameter = method
+  end
+  log(parameter)
+  ---http://192.168.2.92/fsbws/ajax.php?action=command&command=ps1b2
+  http:request("http://"..IP.."/"..version.."/ajax.php?action=command&command="..parameter, { 
+    options = { 
+      method = 'GET', 
+      headers = {
+        ["Cookie"] = cookie
+	  },
+      timeout = 5000
+    }, 
+    success = function(status)
+      log(status.status)
+      if status.status == 200 then
+        jsonTable = json.decode(status.data)
+        if jsonTable.error == 0 then
+          fibaro:sleep(10000)
+          getDataFSB(cookie, virtID, IP, method) 
+        else
+          errorlog("Error geting data: " .. status.data)
+          fibaro:call(virtID, "setProperty", "ui.lblError.value", "Error getting data")
+        end
+      else
+        errorlog("Error geting data: " .. status.status)
+        fibaro:call(virtID, "setProperty", "ui.lblError.value", "Error getting data")
+      end
+    end,
+    error = function(err) 
+      errorlog(err) 
+    end 
+  })
+end
+
+function loginFSB(cookie, password, virtID, IP, version, method)
+  data = "password="..password.."&submit=Inloggen"
+  http:request("http://"..IP.."/"..version.."/index.php?action=login", { 
+    options = { 
+      method = 'POST', 
+      headers = {
+        ["Content-Type"] = "application/x-www-form-urlencoded",       
+        ["Cookie"] = cookie
+	  },
+      data = data, 
+      timeout = 5000
+    }, 
+    success = function(status)
+      --log(status.status)
+      if status.status == 200 then
+        if method == "update" then
+          getDataFSB(cookie, virtID, IP, version, method)
+        elseif method == "pondpump" then
+          setParameter(cookie, virtID, IP, version, method, fibaro:args()[6])
+        elseif method == "uv" then
+          setParameter(cookie, virtID, IP, version, method)
+        elseif method == "airpump" then
+          setParameter(cookie, virtID, IP, version, method)
+        elseif method == "trommelpump" then
+          setParameter(cookie, virtID, IP, version, method)
+        end
+      end
+    end,
+    error = function(err) 
+      errorlog("Error in loginFSB: "..err) 
+    end 
+  }) 
+end
+
+---Main
+http = net.HTTPClient()
+local virtID,IP,cookie,version,method = fibaro:args()[1],fibaro:args()[2],fibaro:args()[3],fibaro:args()[4],fibaro:args()[5]
+log(virtID..IP..cookie..version..method)
+loginFSB(cookie, password, virtID, IP, version, method)
