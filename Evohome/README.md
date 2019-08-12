@@ -1,4 +1,5 @@
 # Evohome
+_version 3.3.3_
 
 With Evohome you can use your Fibaro Homecenter 2 to control your Honeywell Evohome system
 
@@ -6,16 +7,17 @@ Original posting:
 http://forum.fibaro.com/index.php?/topic/15232-honeywell-evohome/?p=83442
 
 ## Requirements
+- Fibaro Homecenter 2
 - Evohome with color screen and Internet gateway (RFG100) or Evohome with wifi
 - Evohome account
-- Fibaro Homecenter 2
+
 
 ## Installing
 - Create a Variable (Panels / Variables Panel): EvohomeAPI
 
 ##### Scene
 - Create a LUA scene "Evohome API"
-- Paste the code from evohome-api.txt
+- Paste the code from "Evohome_2.0_scene.lu"
 - Change the following in the scene:
 ```
 local username = "EMAIL" -- Evohome username
