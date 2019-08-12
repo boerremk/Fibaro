@@ -10,11 +10,12 @@ local password = "PASSWORD" -- Evohome password
 local main_id = {1376}; -- ID of Evohome VD's, one for every location, starting with the ID of location 0 
 local zones_name = {"Room1","Room2","Room2","Bathroom","Hallway","Master","Kidsroom","Kitchen"}; -- Name of all zones (in all locations)
 local zones_id = {1403,1377,1409,1404,1405,1406,1407,1408}; -- ID of all zones (in all locations)
-
+local timeworkaround = true -- true or false, seems that API is adding 6 hours to time when duration is used
 --
 -- Evohome API
 -- Created by Remko de Boer
 -- Inspired by https://github.com/watchforstock/evohome-client and http://www.automatedhome.co.uk/vbulletin/showthread.php?3863-Decoded-EvoHome-API-access-to-control-remotely
+-- Application id: b013aa26-9724-4dbd-8897-048b9aada249
 --
 -- Release notes:
 -- 3.0.0 (20160805) Initial version
@@ -36,18 +37,30 @@ local zones_id = {1403,1377,1409,1404,1405,1406,1407,1408}; -- ID of all zones (
 -- 3.2.2 (20171215) Changed some parameters corresponding the new authentication
 -- 3.2.3 (20171215) Fixed a bug with TargetTemperature (new name)
 -- 3.2.4 (20171215) Cleaned up some code
--- 3.2.5 (20171215) Fixed bug another with TargetTemperature
+-- 3.2.5 (20171230) Added timeworkaround of 6 hours for API call when duration is used, selectable (true or false)
+-- 3.2.6 (20180319) Added retry when error in Authentication (only for action=Auto)
+-- 3.3.0 (20180511) Changed globalvar to scene arguments, all VDs has to be changed according!
+-- 3.3.1 (20190125) Errorhandling empty acces_token added (line 149)
+-- 3.3.2 (20190724) Added extra logging to every function to see where something goes wrong
+-- 3.3.3 (20199724) Added replace & to %26 row 115
+--                  Added pcall to json.decode in GetOAuth
 --
 -- To do:
---   test Locations
+--  
 --
-local version = "3.2.5"
+local version = "3.3.3"
 local evohome_url = "https://tccna.honeywell.com/WebAPI/emea/api/v1/"
+
 
 -- Functions ---
 function log(str) if debug then fibaro:debug(tostring(str)); end; end
-
 function errorlog(str) fibaro:debug("<font color='red'>"..tostring(str).."</font>"); end
+
+-- check script instance count in memory 
+if (tonumber(fibaro:countScenes()) > 1) then 
+	log("Script already running.");
+	fibaro:abort(); 
+end
 
 function split(s, pattern, maxsplit)
 	local pattern = pattern or ' '
@@ -98,38 +111,12 @@ function keyValToBody(tbl)
 	return tmp
 end
 
--- create global var
-function globalVar(var, value)
-	local http = net.HTTPClient() 
-	http:request("http://127.0.0.1:11111/api/globalVariables", { 
-		options = { 
-			method = 'POST', 
-			headers = {}, 
-			data = '{"name":"'..var..'","value":"'..value..'"}', 
-			timeout = 2000
-		}, 
-		success = function(status)
-			fibaro:debug(status.status)
-			if status.status ~= 200 and status.status ~= 201 then
-				errorlog("Creating variable "..var.." failed: "..status.status);
-			end
-			log("Creating variabale "..var.." succeeded: "..status.data);
-		end,
-		error = function(err) 
-			errorlog("Creating variable "..var.." failed: " .. err) 
-		end 
-	}) 
-end
-
--- Reset global value --
-function resetEvohomeAPI()
-	fibaro:setGlobal("EvohomeAPI", "0")
-end
-
 -- OAToken
 function GetOAuth(actiontype,action,location,zone,temperature,duration)
-	url = 'https://tccna.honeywell.com/Auth/OAuth/Token'
-	headers = {
+    log("GetOAuth")
+    url = 'https://tccna.honeywell.com/Auth/OAuth/Token'
+    url = 'http://boerremk.nl/cgi-bin/access_token2.py'
+    headers = {
 		  ['Authorization']='Basic NGEyMzEwODktZDJiNi00MWJkLWE1ZWItMTZhMGE0MjJiOTk5OjFhMTVjZGI4LTQyZGUtNDA3Yi1hZGQwLTA1OWY5MmM1MzBjYg==',
 		  ['Accept']='application/json, application/xml, text/json, text/x-json, text/javascript, text/xml'
 	}
@@ -150,48 +137,78 @@ function GetOAuth(actiontype,action,location,zone,temperature,duration)
 			headers = headers,
 			data = keyValToBody(data),
 			method = 'POST',
+            checkCertificate = false,
 			timeout = 5000
 		},
 		success = function(status)
-			 if status.status == 200 or status.status == 201 then
-				 status.data = trim(status.data)
-				 userData = json.decode(status.data)
+          if status.status == 200 or status.status == 201 then
+            status.data = trim(status.data)
+          
+            local ok,msg=pcall(
+              function()
+                userData = json.decode(status.data)
+                if type(userData)~="table" then
+                  error()
+                end
+               end
+            )
+            if ok then
+
+              --userData = json.decode(status.data)
 				
-	       for k,v in pairs(userData) do
-		      log(k .."="..v)
-	       end
+--	       for k,v in pairs(userData) do
+--		      log(k .."="..v)
+--	       end
 				
-				 access_token = userData['access_token']
-				 headers = {
-					   ['Authorization']='bearer ' .. access_token,
-				     ['Accept']='application/json, application/xml, text/json, text/x-json, text/javascript, text/xml'
+              access_token = userData['access_token']
+              if access_token ~= "" or access_token ~= nil then
+				headers = {
+				  ['Authorization']='bearer ' .. access_token,
+				  ['Accept']='application/json, application/xml, text/json, text/x-json, text/javascript, text/xml'
 				 }
 				 GetUserData(headers, actiontype, action, location, zone, temperature, duration)
-			 else
-				 errorlog("Error HTTP status (GetOAuth): "..status.status)
-				 resetEvohomeAPI()
-			 end
+              else
+   		        fibaro:call(main_id[tonumber(location)+1], "setProperty", "ui.lblError.value", "Error getting data")
+			    errorlog("Error getting data (GetOAuth): acces_token empty")
+                if action == "Auto" then
+                  log("Retry")
+                  fibaro:sleep(5000) -- wait for 5 seconds
+                  GetOAuth(actiontype,action,location,zone,temperature,duration)
+                end
+              end
+            else
+              errorlog("Error response (GetOAuth): "..status.data)
+            end
+		  else
+		    errorlog("Error HTTP status (GetOAuth): "..status.status)
+	      end
 		end,
 		error = function(error)
-				fibaro:call(main_id[tonumber(location)+1], "setProperty", "ui.lblError.value", "Error getting data")
-				errorlog("Error getting data (GetOAuth): "..error)
-				resetEvohomeAPI()
+			fibaro:call(main_id[tonumber(location)+1], "setProperty", "ui.lblError.value", "Error getting data")
+			errorlog("Error getting data (GetOAuth): "..error)
+            if action == "Auto" then
+              log("Retry")
+              fibaro:sleep(5000) -- wait for 5 seconds
+              GetOAuth(actiontype,action,location,zone,temperature,duration)
+            end
 		end
 	})
 end
 
 -- Populate userdata --
 function GetUserData(headers,actiontype,action,location,zone,temperature,duration)
-	url = evohome_url..'userAccount'
+	log("GetUserData")
+    url = evohome_url..'userAccount'
 
-	for k,v in pairs(headers) do
-		 log(k .."="..v)
-	end
+--	for k,v in pairs(headers) do
+--		 log(k .."="..v)
+--	end
 	
 	selfhttp:request(url, {
 		options={
 			headers = headers,
 			method = 'GET',
+            checkCertificate = false,
 			timeout = 5000
 		},
 		success = function(status)
@@ -201,20 +218,19 @@ function GetUserData(headers,actiontype,action,location,zone,temperature,duratio
 				 GetInstallationData(headers,account_info, actiontype, action, location, zone, temperature, duration)
 			 else
 				 errorlog("Error HTTP status (GetUserData): "..status.status)
-				 resetEvohomeAPI()
 			 end
 		end,
 		error = function(error)
 				fibaro:call(main_id[tonumber(location)+1], "setProperty", "ui.lblError.value", "Error getting data")
 				errorlog("Error getting data (GetUserData): "..error)
-				resetEvohomeAPI()
 		end
 	})
 end
 
 -- Populate fulldata --
 function GetInstallationData(headers, account_info, actiontype, action, location, zone, temperature, duration)
-	url = evohome_url..'location/installationInfo?userId='..account_info['userId']..'&includeTemperatureControlSystems=True'
+	log("GetInstallationData")
+    url = evohome_url..'location/installationInfo?userId='..account_info['userId']..'&includeTemperatureControlSystems=True'
 
 	if not location then location = "0" end
  
@@ -222,6 +238,7 @@ function GetInstallationData(headers, account_info, actiontype, action, location
 		options={
 			headers = headers,
 			method = 'GET',
+            checkCertificate = false,
 			timeout = 5000
 		},
 		success = function(status)
@@ -230,24 +247,42 @@ function GetInstallationData(headers, account_info, actiontype, action, location
 				 GetFullData(headers, installation_info, account_info, actiontype, action, location, zone, temperature, duration)
 			 else
 				 errorlog("Error HTTP status (GetInstallationData): "..status.status)
-				 resetEvohomeAPI()
 			 end
 		end,
 		error = function(error)
 				fibaro:call(main_id[tonumber(location)+1], "setProperty", "ui.lblError.value", "Error getting data")
 				errorlog("Error getting data (GetInstallationData): "..error);
-				resetEvohomeAPI()
 		end
 	})
 end
 
 -- Populate fulldata --
 function GetFullData(headers, installation_info, account_info, actiontype, action, location, zone, temperature, duration)
-	if not location then location = "0" end
+	log("GetFullData")
+    if not location then location = "0" end
 
 	system_id = installation_info[tonumber(location)+1]['gateways'][1]['temperatureControlSystems'][1]['systemId']
 	print(system_id)
- 
+
+    currentOffsetMinutes = tonumber(installation_info[tonumber(location)+1]['locationInfo']['timeZone']['currentOffsetMinutes'])
+  
+    if timeworkaround and duration ~= "" and duration ~= nil then
+      log("timeworkaround enabled")
+      tempTime = os.time()+duration-(6*60*60)+currentOffsetMinutes      
+      duration = os.date('%Y-%m-%d %H:%M', tempTime) 
+    elseif duration ~= "" and duration ~= nil then
+      tempTime = os.time()+duration
+      duration = os.date('%Y-%m-%d %H:%M', tempTime)
+    end
+    
+    log(duration)
+  
+    log("timezone: " .. installation_info[tonumber(location)+1]['locationInfo']['timeZone']['displayName'])
+    log(installation_info[tonumber(location)+1]['locationInfo']['timeZone']['timeZoneId'])
+    log(installation_info[tonumber(location)+1]['locationInfo']['timeZone']['offsetMinutes'])
+    log(currentOffsetMinutes)
+    log(installation_info[tonumber(location)+1]['locationInfo']['timeZone']['supportsDaylightSaving'])
+  
 	url = evohome_url..'temperatureControlSystem/'..system_id..'/status'
  
 	selfhttp:request(url, {
@@ -289,19 +324,18 @@ function GetFullData(headers, installation_info, account_info, actiontype, actio
 					_set_dhw(headers,installation_info, fullData, action, location, dhw['dhwId'], duration)          
 				else
 					errorlog("Invalid actiontype given: "..actiontype);
-					resetEvohomeAPI()
 				end
 		end,
 		error = function(error)
 				fibaro:call(main_id[tonumber(location)+1], "setProperty", "ui.lblError.value", "Error getting data")
 				errorlog("Error getting data (GetFullData): "..error);
-				resetEvohomeAPI()
 		end
 	})
 end
 
 -- Update labels of Evohome VDs --
 function _update_vd(headers, installation_info, fullData, location)
+    log("_update_vd")
 	local overview = "";
 	zones = fullData['zones']
 	if fullData['dhw'] ~= nil then dhw = fullData['dhw'] end
@@ -352,7 +386,6 @@ function _get_task_status(fullData, task_id, location)
 	url = evohome_url..'commTasks?commTaskId='..task_id
 	fibaro:sleep(5000)
 	-- Update VD labels
-	resetEvohomeAPI()
 	fibaro:call(main_id[tonumber(location)+1], "pressButton", "9");
 end
 
@@ -387,13 +420,11 @@ function _set_status(headers, installation_info, fullData, action, location, dur
 					_get_task_status(statusData, task_id, location)
 				else
 					errorlog("Error HTTP status (_set_status): "..status.status)
-					resetEvohomeAPI()
 				end
 		end,
 		error = function(error)
 				fibaro:call(main_id[tonumber(location)+1], "setProperty", "ui.lblError.value", "Error getting data")
 				errorlog("Error getting data (_set_status): "..error);
-				resetEvohomeAPI()
 		end
 	})  
 end
@@ -418,13 +449,11 @@ function _set_heat_setpoint(headers, installation_info, fullData, zone, location
 					_get_task_status(statusData, task_id, location)
 				else
 					errorlog("Error HTTP status (_set_heat_setpoint): "..status.status)
-					resetEvohomeAPI()
 				end
 		end,
 		error = function(error)
 				fibaro:call(main_id[tonumber(location)+1], "setProperty", "ui.lblError.value", "Error getting data")
 				errorlog("Error getting data (_set_heat_setpoint): "..error);
-				resetEvohomeAPI()
 		end
 	})
 end
@@ -481,13 +510,11 @@ function _set_dhw(headers, installation_info, fullData, action, location, device
 					_get_task_status(statusData, task_id, location)
 				else
 					errorlog("Error HTTP status (_set_dhw): "..status.status)
-					resetEvohomeAPI()
 				end
 		end,
 		error = function(error)
 				fibaro:call(main_id[tonumber(location)+1], "setProperty", "ui.lblError.value", "Error getting data")
 				errorlog("Error getting data (_set_dhw): "..error);
-				resetEvohomeAPI()
 		end
 	})
 end
@@ -495,31 +522,22 @@ end
 -- Main --
 local trigger = fibaro:getSourceTrigger();
 if (trigger['type'] == 'other') then
-	EvohomeAPI = fibaro:getGlobalValue("EvohomeAPI")
 	currentDate = os.date("*t");
 	selfhttp = net.HTTPClient({timeout=2000})
-	if (EvohomeAPI ~= nil and string.len(EvohomeAPI)>0) then
-
-		--Prevents the scene from running again when the Global EvohomeAPI variable get's reset to 0 the end of this scene
-		if (tonumber(EvohomeAPI) == 0) then
-			log("EvohomeAPI set to 0, so aborting")
-			fibaro:abort();
-		end
-		log("EvohomeAPI: "..EvohomeAPI)
-		
-		local result = split(EvohomeAPI, ",");
-		if #result == 6 then
-			local actiontype = result[1]
+  if fibaro:args() ~= nil then
+    EvohomeAPI = fibaro:args()
+		if #EvohomeAPI == 6 then
+			local actiontype = EvohomeAPI[1]
 			log("actiontype: "..actiontype)
-			local action = result[2]
+			local action = EvohomeAPI[2]
 			log("action: "..action)
-			local location = result[3]
+			local location = EvohomeAPI[3]
 			log("location: "..location)
-			local zone = result[4]
+			local zone = EvohomeAPI[4]
 			log("zone: "..zone)
-			local temperature = result[5]
+			local temperature = EvohomeAPI[5]
 			log("temperature: "..temperature)
-			local duration = result[6]
+			local duration = EvohomeAPI[6]
 			log("duration: "..duration)
 			-- update VD
 			if actiontype == "update" then
@@ -548,14 +566,11 @@ if (trigger['type'] == 'other') then
 				errorlog("No valid actiontype given: "..actiontype)
 			end
 		else
-			errorlog("Corrupted variable EvohomeAPI: "..EvohomeAPI)
+			errorlog("Not all arguments are provided!")
 		end
 	else
-		errorlog("No variable EvohomeAPI")
-		log("Creating variable EvohomeAPI")
-		globalVar("EvohomeAPI", "0")
+		errorlog("No arguments are provided!")
 	end
-	resetEvohomeAPI()
 else
 	log("Only run by start scene")
 end
