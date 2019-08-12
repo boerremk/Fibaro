@@ -22,7 +22,7 @@ function keyValToBody(tbl)
   return tmp
 end
 ```
-- To round a value
+- Round a value
 ```
 function round(val, decimal)
   if (decimal) then
@@ -38,5 +38,79 @@ function round(val, decimal)
       return math.ceil(val-0.5)
     end
   end
+end
+```
+- Base64
+```
+--- base64 start
+-- character table string
+local b='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/'
+
+-- encoding
+function enc(data)
+  return ((data:gsub('.', function(x) 
+    local r,b='',x:byte()
+    for i=8,1,-1 do r=r..(b%2^i-b%2^(i-1)>0 and '1' or '0') end
+    return r;
+  end)..'0000'):gsub('%d%d%d?%d?%d?%d?', function(x)
+    if (#x < 6) then return '' end
+    local c=0
+    for i=1,6 do c=c+(x:sub(i,i)=='1' and 2^(6-i) or 0) end
+    return b:sub(c+1,c+1)
+  end)..({ '', '==', '=' })[#data%3+1])
+end
+
+-- decoding
+function dec(data)
+  data = string.gsub(data, '[^'..b..'=]', '')
+  return (data:gsub('.', function(x)
+    if (x == '=') then return '' end
+    local r,f='',(b:find(x)-1)
+    for i=6,1,-1 do r=r..(f%2^i-f%2^(i-1)>0 and '1' or '0') end
+    return r;
+  end):gsub('%d%d%d?%d?%d?%d?%d?%d?', function(x)
+    if (#x ~= 8) then return '' end
+    local c=0
+    for i=1,8 do c=c+(x:sub(i,i)=='1' and 2^(8-i) or 0) end
+    return string.char(c)
+  end))
+end
+--- einde base64
+```
+- Bool to INT
+```
+intvar=(boolvar and 1 or 0)
+```
+- First character to uppercase
+```
+Function firstToUpper(str)
+  return (str:gsub("^%l", string.upper))
+end
+```
+- Split
+```
+function split(s, pattern, maxsplit)
+  local pattern = pattern or ' '
+  local maxsplit = maxsplit or -1
+  local s = s
+  local t = {}
+  local patsz = #pattern
+  while maxsplit ~= 0 do
+    local curpos = 1
+    local found = string.find(s, pattern)
+    if found ~= nil then
+      table.insert(t, string.sub(s, curpos, found - 1))
+      curpos = found + patsz
+      s = string.sub(s, curpos)
+    else
+      table.insert(t, string.sub(s, curpos))
+      break
+    end
+    maxsplit = maxsplit - 1
+    if maxsplit == 0 then
+      table.insert(t, string.sub(s, curpos - patsz - 1))
+    end
+  end
+  return t
 end
 ```
