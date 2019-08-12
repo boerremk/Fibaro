@@ -161,3 +161,14 @@ local currentDate = os.date("%d-%m-%Y");
 local currentDateTable = os.date("*t"); --{year, month, day, yday, wday, hour, min, sec, isdst}
 local day = os.date("%A");
 ```
+- Passing values to a scene
+```
+Suppose you want to pass an  ID and a Value to another scene.
+
+Sending scene:
+fibaro:startScene(207,{1437,99})
+ 
+Receiving scene (this has ID 207):
+local id,value=fibaro:args()[1],fibaro:args()[2]
+fibaro:debug(("args: %d %d."):format(id, value))
+```
