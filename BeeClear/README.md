@@ -6,7 +6,8 @@ BeeClear is virtual device that shows information from a BeeClear device.
 - BeeClear device (https://www.beeclear.nl)
 
 ## Installation
-1. Run once in a webbrowser: http://<BeeClear>/bc_security?set=off 
+1. Run once in a webbrowser: http://<BeeClear>/bc_security?set=off
+  
 In HC2:
 2. Devices
 3. Add or remove device
