@@ -114,3 +114,50 @@ function split(s, pattern, maxsplit)
   return t
 end
 ```
+- Add a Global Variable in a scene
+```
+function addGlobal(vName, vValue)
+  local http = net.HTTPClient({timeout=5000})
+  requestData = json.encode({ name = vName, value = vValue })
+  http:request("http://127.0.0.1:11111/api/globalVariables", { 
+    options = {
+      method = 'POST', 
+      headers = { 
+        ['Content-Type'] = 'application/json'
+      },
+      data = requestData,
+      timeout =  5000
+    }, 
+    success = function(resp)
+      if tonumber(resp.status) == 201 then
+        fibaro:debug("Status: "..tostring(resp.status)..", variable: "..vName.." added, value: "..vValue)
+      end
+    end,
+    error = function(err) 
+      fibaro:debug("Error: "..tostring(err)..", variable: "..vName.." adding FAILED")
+    end
+  })
+end
+```
+- Add a Global Variable in a VD
+```
+function addGlobal(vName, vValue)
+  if fibaro:getGlobalValue(vName) == nil then
+    local HC2 = Net.FHttp("127.0.0.1",11111);
+    requestData = json.encode({ name = vName, value = vValue })
+    local response ,status, err = HC2:POST('/api/globalVariables',requestData);
+    if (tonumber(status) == 200 and tonumber(err)==0) then
+      fibaro:debug("Status: "..tostring(status)..", variable: "..vName.." added, value: "..vValue);
+    else
+       fibaro:debug("Error: "..tostring(err)..", variable: "..vName.." adding FAILED")
+    end
+  end
+end
+```
+- Date and Time
+```
+local currentTime = os.date("%H:%M");
+local currentDate = os.date("%d-%m-%Y");
+local currentDateTable = os.date("*t"); --{year, month, day, yday, wday, hour, min, sec, isdst}
+local day = os.date("%A");
+```
