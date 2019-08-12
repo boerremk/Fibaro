@@ -17,7 +17,7 @@ In HC2
 4. Paste FSBPi.lua
 5. Change the lines:
 ```
-local password = "PASSWORD" -- Password used for the FSBPi
+local password = "FSB PASSWORD" -- Password used for the FSBPi
 local username = json.decode(fibaro:getGlobalValue("Remko")) -- User for sending messages
 ```
 6. Asign room
