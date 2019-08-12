@@ -1,5 +1,5 @@
 # Code snippets
-Here you find some code snippets, that can be used in scenes and virtual devices in Homecenter2
+Here you find some code snippets that can be used in scenes and virtual devices in Homecenter2
 
 - Check script instance count in memory 
 ```
