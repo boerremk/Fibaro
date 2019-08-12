@@ -22,7 +22,7 @@ APC UPC is ea VD that display te status of an APC UPC.
 11. Assign room to VD
 12. Change the lines (Update button):
 ```
-local icon = {"1046","1047"} -- Should be the xxxx you found in step 8 and 9
+local icon = {"1046","1047"} -- Should be the xxxx you found in step 8 and 9 (apcups.png, apcupserror.png)
 local url = "/cgi-bin/apcupsd/upsstats_fibaro.cgi" -- Should be the path from step 3
 ```
 13. Save
