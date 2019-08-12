@@ -25,7 +25,7 @@ APC UPC is ea VD that display te status of an APC UPC.
 local icon = {"1046","1047"} -- Should be the xxx you found in step 8 and 9
 local url = "/cgi-bin/apcupsd/upsstats_fibaro.cgi" -- Should be the path from step 3
 ```
-12. Save
+13. Save
 
 That is it!
 
