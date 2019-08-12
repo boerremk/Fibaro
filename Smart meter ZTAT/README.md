@@ -1,6 +1,6 @@
 # Smart meter ZTATZ
 
-Smart meter ZTATZ is a Virtual Device that reads out the P1 monitor. The P1 monitor software can be found on [here] 
+Smart meter ZTATZ is a Virtual Device that reads out the P1 monitor. The P1 monitor software can be found on [here]
 (https://www.ztatz.nl/p1-monitor/) This software can be installed on a Raspberry PI. 
 
 ## Requirements
