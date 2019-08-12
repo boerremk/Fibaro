@@ -16,8 +16,8 @@ APC UPC is ea VD that display te status of an APC UPC.
 5. Add or remove device
 6. Import virtual device APC_UPS.vfib
 7. Change icon and add all the icons in the following order: apcups.png, apcupserror.png, gettingdata.png.
-8. Right click the icon apcups.png and click "save the image", you will see someting as userxxxx, remeber the xxxx
-9. Right click the icon apcupserror.png and click "save the image", you will see someting as userxxxx, remeber the xxxx
+8. Right click the icon apcups.png and click "save the image", you will see someting as userxxxx, remember the xxxx
+9. Right click the icon apcupserror.png and click "save the image", you will see someting as userxxxx, remember the xxxx
 10. Assign icon gettingdata.png to the Update button
 11. Assign room to VD
 12. Change the lines (Update button):
