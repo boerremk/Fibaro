@@ -7,9 +7,7 @@ BeeClear is virtual device that shows information from a BeeClear device.
 
 ## Installation
 1. Run once in a webbrowser: http://<BeeClear>/bc_security?set=off
-  
-In HC2:
-2. Devices
+2. In HC2 go to Devices
 3. Add or remove device
 4. Import virtual device
 5. Set IP Address to address of BeeClear device
