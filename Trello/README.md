@@ -1,6 +1,9 @@
 # Trello
+A scene and vd to get the informartion of a Trello board
 
 ## Requierments
+- Trello API key: https://trello.com/app-key
+- Trello secret: https://trello.com/app-key
 
 ## Installation
 ##### Scene
@@ -10,7 +13,7 @@
 4. Paste code "Trello API.lua"
 5. Change lines:
 ```
-local debug = false; -- Enable debug yes/no
+local debug = true; -- Enable debug yes/no
 local API_KEY = "API KEY" -- Trello API key: https://trello.com/app-key
 local TOKEN = "TRELLO SECRET" -- Trello secret:  https://trello.com/app-key
 local main_id = 613; -- ID of Trello VD
