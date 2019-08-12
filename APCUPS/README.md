@@ -6,7 +6,7 @@ APC UPC is ea VD that display te status of an APC UPC.
 - APC UPC with USB databconnection
 - Server running apcupsd
 - Webserver running Python
-- 
+- VD depends on sendMessage scene to send notifications
 
 ## Installation
 1. Install apcupsd on a server (http://www.apcupsd.org)
