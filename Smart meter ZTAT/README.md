@@ -20,7 +20,7 @@ Created and maintained by [Alexander Troost](https://github.com/atroost)
 Based on a post by evanbeem on https://forum.fibaro.com/topic/30304-solvedsmart-meter-reading-with-p1monitor/?tab=comments#comment-150316
 
 ## To Do
-- translate to ENG
+[ ] translate to ENG
 
 ## Contributing
 Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
