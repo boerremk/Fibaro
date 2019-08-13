@@ -4,12 +4,12 @@
 %% globals
 --]]
 local debug = true;
-local Pushover_tkn = Pushover Token
-local Pushover_usr = Pushover user
-local PushoverGlances_tkn = Pushover Glances Token
-local PushoverGlances_usr = Pushover Glances user
-local Telegram_token = Telegram Token
-local Telegram_chat_id = Telegram Chat ID
+local Pushover_tkn = "Pushover Token"
+local Pushover_usr = "Pushover user"
+local PushoverGlances_tkn = "Pushover Glances Token"
+local PushoverGlances_usr = "Pushover Glances user"
+local Telegram_token = "Telegram Token"
+local Telegram_chat_id = "Telegram Chat ID"
 
 --[[
 sendMessage
