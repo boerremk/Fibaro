@@ -15,8 +15,8 @@ This is a Fibaro Virtual Device (VD) that checks the status of the PostNL (Dutch
   - Go to  Scenes
   - Add scene
   - Add scene in lua
-  - Paste the LUA code of the file Postnl API
-  - Replace the username and password with the postal email and password
+  - Paste the LUA code of the file "Postnl API.lua"
+  - Replace the username and password with the Postnl email and password
   - Set the debug on true 
   - Call the scene "PostNL API"
   - Set the scene to Manual
@@ -25,7 +25,9 @@ This is a Fibaro Virtual Device (VD) that checks the status of the PostNL (Dutch
   - Use the PostNL API.png icon as scene icon
 
 ###### Virtual Device
-  - Create a Virtual Device (devices -> add device -> Import VD) using the file: PostNL.vfib
+  - Devives
+  - Add or remove device
+  - Import virtual device "PostNL.vfib"
   - Select the id of the scene as TCP port
   - Assign a room
   - Save
