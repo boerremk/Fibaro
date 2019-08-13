@@ -1,5 +1,5 @@
 # PostNL
-*version 0.0.7*
+*version 1.0.0*
 
 This is a Fibaro Virtual Device (VD) that checks the status of the PostNL (Dutch Postal Service)track and trace API.
 
