@@ -25,6 +25,8 @@ local Telegram_chat_id = Telegram Chat ID
 ```
 - Give the scene a name
 - Assign to a room
+- Set "Max. running instances" to 10
+- Set "Run scene" to manual
 - Save
 - Add icon
 - Add Global Variable "sendMessage" with the ID of the scene as value
