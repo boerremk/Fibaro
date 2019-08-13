@@ -3,7 +3,7 @@
 %% events
 %% globals
 --]]
-debug = false;
+debug = true;
 username = "POSTNL EMAIL";
 password = "POSTNL PASSWORD";
 limit = 10;
@@ -36,6 +36,7 @@ Release notes:
   0.0.5 (20181130) Changed way to set headers in API function
   0.0.6 (20181228) Some issues with special packages solved, sender information was not present
   0.0.7 (20181228) Added variable limit, to limit the results presented.
+  1.0.0 (20190813) Fixed bug if limit is higher then the amount of parcels returned by Postnl
 
 To do:
   updateVD: expected date?
@@ -44,7 +45,7 @@ To do:
 
   
 --]]
-local version = "0.0.7"
+local version = "1.0.0"
 
 baseUrl = "https://jouw.postnl.nl/web/";
 apiUrl = baseUrl.."api/default/";
@@ -135,6 +136,9 @@ function updateVD(main_id, userData)
   local currentDate = os.date("%d-%m-%Y");
   if main_id ~= "" then
 --    for p=1, #userData do
+    if #userData < limit then
+      limit = #userData
+    end
     for p=1, limit do
       naam = ""
       if userData[p]['delivery']['status'] == "Delivered" and os.date("%d-%m-%Y", makeTimeStamp(userData[p]['delivery']['deliveryDate'])) == currentDate then
