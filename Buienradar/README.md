@@ -11,8 +11,18 @@ In HC2:
 - Devices
 - Add or delete device
 - Import virtual device
-- Change icon
 - Assign to a room
+- In the mainloop change the line:
+```
+local beforeRain = 15; -- in minutes, time to send message before rain
+local afterRain = 15; -- in mintues, time to set Buienradar to 0
+local zonnescherm = {true,{807}}; -- if you own a sunshade set to true and add the ids of the sunshades, seprated by comma
+local startTime = "07:00" -- time to start messages
+local stopTime = "23:00"; -- time to stop messages
+```
+- Save
+- Change icon
+
 
 That is it!
 
