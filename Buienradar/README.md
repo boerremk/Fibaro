@@ -12,7 +12,7 @@ In HC2:
 - Add or delete device
 - Import virtual device
 - Assign to a room
-- In the mainloop change the line:
+- In the mainloop change the lines:
 ```
 local beforeRain = 15; -- in minutes, time to send message before rain
 local afterRain = 15; -- in mintues, time to set Buienradar to 0
