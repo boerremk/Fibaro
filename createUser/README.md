@@ -23,6 +23,7 @@ Go to http://<IP OF HC2>/api/iosDevices to find the FIBARO PHONEID
 
 6. Name the scene 'createUser'
 7. Assign to room
+8. Set "Run scene" to manual
 8. Save
 9. Add icon to scene
 10. Run the scene
