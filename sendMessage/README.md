@@ -16,12 +16,12 @@ sendMessage is a Homecenter 2 scene to send mail, Fibaro push, Pushover*, Pushov
 - Paste code
 - Change the lines:
 ```lua
-local Pushover_tkn = Pushover Token
-local Pushover_usr = Pushover user
-local PushoverGlances_tkn = Pushover Glances Token
-local PushoverGlances_usr = Pushover Glances user
-local Telegram_token = Telegram Token
-local Telegram_chat_id = Telegram Chat ID
+local Pushover_tkn = "Pushover Token"
+local Pushover_usr = "Pushover user"
+local PushoverGlances_tkn = "Pushover Glances Token"
+local PushoverGlances_usr = "Pushover Glances user"
+local Telegram_token = "Telegram Token"
+local Telegram_chat_id = "Telegram Chat ID"
 ```
 - Give the scene a name
 - Assign to a room
