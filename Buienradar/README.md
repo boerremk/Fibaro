@@ -1,9 +1,9 @@
 # Buienradar
 
-Buienradar is a Homecenter 2 virtual device that display Buienradar information. It sends a message when rain is expected.
+Buienradar is a Homecenter 2 virtual device that display Buienradar information. It sends a message when rain is expected and closes sunshade if you own some.
 
 ## Requirements
-- Works in The Netherlands only
+- Living in The Netherlands
 - For sending of a message it depends on sendMessage scene
 
 ## Installation:
