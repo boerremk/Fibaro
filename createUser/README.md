@@ -28,7 +28,7 @@ Go to http://<IP OF HC2>/api/iosDevices to find the FIBARO PHONEID
 9. Add icon to scene
 10. Run the scene
 
-For every user you want to add you have to follow step 5-10 (you can skip step 9)
+**For every user you want to add you have to follow step 5-10 (you can skip step 9)**
 
 That is it!
 
