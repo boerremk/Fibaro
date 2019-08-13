@@ -11,7 +11,7 @@ local PushoverGlances_usr = "Pushover Glances user"
 local Telegram_token = "Telegram Token"
 local Telegram_chat_id = "Telegram Chat ID"
 
---[[
+-[[
 sendMessage
 Created by Remko de Boer
 
@@ -43,11 +43,12 @@ Release notes:
   1.0.0 (20180812) Bugfixes and production version
   1.0.1 (20190120) Added Usage
   2.0.0 (20190810) Combined Pushover, Pushover Glances, Telegram and sendMessage
+  2.1.0 (20190813) Removed Pushover Glances tkn and usr, same as Pushover
 
 To do:
 
 --]]
-local version = "2.0.0"
+local version = "2.0.1"
 
 -- Do not change --
 local function log(str) if debug then fibaro:debug(tostring(str)); end; end
@@ -111,8 +112,8 @@ end
 
 function PushoverGlances(msg)
   local selfhttp = net.HTTPClient({timeout=2000})
-  local tkn = PushoverGlances_tkn
-  local usr = PushoverGlances_usr
+  local tkn = Pushover_tkn
+  local usr = Pushover_usr
   local requestBody = 'token=' ..tkn ..'&user=' ..usr ..msg
   log(requestBody);
 
