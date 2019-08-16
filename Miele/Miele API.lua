@@ -41,6 +41,7 @@ Release notes:
   1.0.0 (20190726) First release
   1.0.1 (20190726) Bug fix: when finoshed targetTemperature is a function
   1.1.0 (20190804) Receiving errors after a while so added refresh token, not ducmented,standarda in oAuth
+  1.2.0 (20190816) Corrected some errormessage with correct function name
 
 To do:
   Testing
@@ -53,6 +54,11 @@ local unit = {["Celcius"] = "C",["Fahrenheit"] = "F"}
 
 local function log(str) if debug then fibaro:debug(tostring(str)); end; end
 local function errorlog(str) fibaro:debug("<font color='red'>"..tostring(str).."</font>"); end
+
+function sendMessage(msg)
+  local subject = "Miele API"
+  fibaro:startScene(sendMessageID,{{false, {Remko["phoneid"]}},{true,{Remko["userid"]}},{false},{false, "100"},{false},subject,msg})
+end
 
 function addGlobal(vName, vValue)
   data = json.encode({ name = vName, value = vValue })
@@ -133,12 +139,15 @@ function getToken(client_id, client_secret, username, password)
       else
         errorlog("Error HTTP status (getToken): "..response.status);
         log(response.data)
-        fibaro:setGlobal("MieleToken", "")
+        sendMessage("Error HTTP status (getToken): "..response.status)
+
+        --fibaro:setGlobal("MieleToken", "")
       end
     end,
     error = function(err)
       errorlog("Error getting data (getToken): "..err)
-      fibaro:setGlobal("MieleToken", "")
+      sendMessage("Error getting data (getToken): "..err)
+      --fibaro:setGlobal("MieleToken", "")
     end
   })
 end
@@ -164,14 +173,16 @@ function refreshToken(token)
         fibaro:setGlobal("MieleToken", response.data)
         getDevices(json.decode(response.data)['access_token'])
       else
-        errorlog("Error HTTP status (getToken): "..response.status);
+        errorlog("Error HTTP status (refreshToken): "..response.status);
         log(response.data)
-        fibaro:setGlobal("MieleToken", "")
+        sendMessage("Error HTTP status (refreshToken): "..response.status)
+        --fibaro:setGlobal("MieleToken", "")
       end
     end,
     error = function(err)
-      errorlog("Error getting data (getToken): "..err)
-      fibaro:setGlobal("MieleToken", "")
+      errorlog("Error getting data (refreshToken): "..err)
+      sendMessage("Error getting data (refreshToken): "..err)
+      --fibaro:setGlobal("MieleToken", "")
     end
   })
 end
@@ -222,13 +233,15 @@ function getDevices(token)
           fibaro:call(VirtualDevice, "setProperty", "ui.lblError.value", "")
         end
       else
-        errorlog("Error HTTP status (getToken): "..response.status);
-        fibaro:setGlobal("MieleToken", "")
+        errorlog("Error HTTP status (getDevices): "..response.status);
+        sendMessage("Error HTTP status (getDevices): "..response.status)
+        --fibaro:setGlobal("MieleToken", "")
       end
     end,
     error = function(err)
-      errorlog("Error getting data (getToken): "..err)
-      fibaro:setGlobal("MieleToken", "")
+      errorlog("Error getting data (getDevices): "..err)
+      sendMessage("Error getting data (getDevices): "..err)
+      --fibaro:setGlobal("MieleToken", "")
     end
   })      
 end
@@ -251,4 +264,6 @@ end
 
 
 -- End script
+
+
 
