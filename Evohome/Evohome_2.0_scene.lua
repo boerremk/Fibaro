@@ -8,8 +8,8 @@ local debug = true; -- Enable debug yes/no
 local username = "EMAIL" -- Evohome username
 local password = "PASSWORD" -- Evohome password
 local main_id = {1376}; -- ID of Evohome VD's, one for every location, starting with the ID of location 0 
-local zones_name = {"Room1","Room2","Room2","Bathroom","Hallway","Master","Kidsroom","Kitchen"}; -- Name of all zones (in all locations)
-local zones_id = {1403,1377,1409,1404,1405,1406,1407,1408}; -- ID of all zones (in all locations)
+local zones_name = {"Room1","Room2","Room3"}; -- Name of all zones (in all locations)
+local zones_id = {1403,1377,1409}; -- ID of all zones (in all locations)
 local timeworkaround = true -- true or false, seems that API is adding 6 hours to time when duration is used
 --
 -- Evohome API
