@@ -32,14 +32,14 @@ local zones_id = {1219,1377,1222,1221,1218,1217,1220,1223}; -- ID of zones VD of
 ##### Virtual devices (zones)
 - Import "Evohome_2.0_-_Zone.vfib" for every zone you need, you have to set/edit:
   The name off the VD should match the name of the zone (case-sensitive!)
-  IP Address of the virtual device with the location ID of youe Evohome system (default = 0) (See Evohome 2.0.png)
+  IP Address of the virtual device with the location ID of your Evohome system (default = 0) (See Evohome 2.0.png)
   TCP port of the virtual device with the ID of the scene (See Evohome 2.0.png)
   
 **REMEMBER THE ID OF THE VD, THIS HAS TO BE PUT IN THE SCENE, SEE ABOVE**
   
 ##### Virtual device (main)
 - Import "Evohome_2.0.vfib" (only once!), you have to set/edit:
-  IP Address of the virtual device with the location ID of youe Evohome system (default = 0) (See Evohome 2.0.png)
+  IP Address of the virtual device with the location ID of your Evohome system (default = 0) (See Evohome 2.0.png)
   TCP port of the virtual device with the ID of the scene (See Evohome 2.0.png)
   The values will be update every 30 minutes (you can change this in the main loop)
 
@@ -47,7 +47,7 @@ local zones_id = {1219,1377,1222,1221,1218,1217,1220,1223}; -- ID of zones VD of
   
 ##### Virtual device (Hotwater)  
 - Import "Evohome_2.0_-_DHW.vfib" for every DHW you need, you have to set/edit:
-  IP Address of the virtual device with the location ID of youe Evohome system (default = 0) (See Evohome 2.0.png)
+  IP Address of the virtual device with the location ID of your Evohome system (default = 0) (See Evohome 2.0.png)
   TCP port of the virtual device with the ID of the scene (See Evohome 2.0.png)
 
 **REMEMBER THE ID OF THE VD, THIS HAS TO BE PUT IN THE SCENE, SEE ABOVE**
