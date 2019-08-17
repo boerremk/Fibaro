@@ -9,7 +9,7 @@ Buienradar is a Homecenter 2 virtual device that display Buienradar information.
 ## Installation:
 In HC2:
 - Devices
-- Add or delete device
+- Add or remove device
 - Import virtual device
 - Assign to a room
 - In the mainloop change the lines:
