@@ -6,6 +6,8 @@ With Evohome you can use your Fibaro Homecenter 2 to control your Honeywell Evoh
 Original posting:
 http://forum.fibaro.com/index.php?/topic/15232-honeywell-evohome/?p=83442
 
+If you need help with the installation go the Fibaro forum and send me a PM (@boerremk).
+
 ## Requirements
 - Fibaro Homecenter 2
 - Evohome with color screen and Internet gateway (RFG100) or Evohome with wifi
@@ -78,6 +80,17 @@ local main_id = {170}; -- ID of Evohome VD's, one for every location, starting w
 local zones_id = {171,172,173}; -- ID of all zones (in all locations)
 ```
 - Save
+
+##### Step 5. Check if everything is OK
+- Go to devices
+- Go to Main Evohome virtual device
+- Click Update button
+- Go to Scenes
+- Go to Evohome API scene
+- Check debug window for any errors
+
+## Common errors
+- Error HTTP status (GetOAuth): Login is failing, check username and password
  
 ## IMPORTANT
 Honeywell changed there security to there API some tome ago so you will receive the following error:
