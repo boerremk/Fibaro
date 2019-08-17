@@ -27,7 +27,7 @@ If you need help with the installation go the Fibaro forum and send me a PM (@bo
 local username = "EMAIL" -- Use your Evohome username
 local password = "PASSWORD" -- Use your Evohome password
 local locationID = 0; -- ID of Evohome location, starting with 0 (default)
-local zones_name = {"Room1","Room2","Room2"}; -- Name of zones of all locations, DHW should be named "" (defined in Evohome, case-sensitive!)
+local zones_name = {"Room1","Room2","Room3"}; -- Name of zones of all locations, DHW should be named "" (defined in Evohome, case-sensitive!)
 ```
 - Save
 
