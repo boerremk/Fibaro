@@ -29,7 +29,7 @@ local zones_name = {"Room1","Room2","Room2"}; -- Name of zones of all locations,
 ```
 - Save
 
-**!!REMEMBER THE ID OF THE SCENE!!**
+**REMEMBER THE ID OF THE SCENE**
 
 ##### Step 2a. Adding zones (virtual devices)
 - Go to Devies
