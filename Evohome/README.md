@@ -46,7 +46,7 @@ _Repeat this step for every zones_
 
 Go to step 2b if you own a Domestic Hot Water, otherwise go to step 3.
 
-##### Step 2b. Adding Domistic Hot Water (virtual)  
+##### Step 2b. Adding Domestic Hot Water (virtual)  
 - Go to Devices
 - Add or remove devices
 - Import "Evohome_2.0_-_DHW.vfib"
@@ -56,7 +56,7 @@ Go to step 2b if you own a Domestic Hot Water, otherwise go to step 3.
 - Save
 - **REMEMBER THE ID OF THE VD, THIS HAS TO BE PUT IN THE SCENE, SEE BELOW**
 
-_Repeat this step for every Domistic Hot Water_
+_Repeat this step for every Domestic Hot Water_
 
 ##### Step 3. Adding Main virtual device
 - Go to Devies
