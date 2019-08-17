@@ -32,7 +32,7 @@ local zones_name = {"Room1","Room2","Room2"}; -- Name of zones of all locations,
 **REMEMBER THE ID OF THE SCENE**
 
 ##### Step 2a. Adding zones (virtual devices)
-- Go to Devies
+- Go to Devices
 - Add or remove devices
 - Import virtual deivce "Evohome_2.0_-_Zone.vfib"
 - Edit:\
@@ -48,7 +48,7 @@ local zones_name = {"Room1","Room2","Room2"}; -- Name of zones of all locations,
 Go to step 2b if you own a Domestic Hot Water, otherwise go to step 3.
 
 ##### Step 2b. Adding Domistic Hot Water (virtual)  
-- Go to Devies
+- Go to Devices
 - Add or remove devices
 - Import "Evohome_2.0_-_DHW.vfib"
 - Edit:\
