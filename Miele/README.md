@@ -8,7 +8,7 @@ Miele is a Homecenter 2 scene and a virtual deivice that shows information of a 
 - At least one Miele devices (for now it only support a washing machine)
 
 ## Installation
-##### Scene
+##### Step 1. Scene
 In HC2:
 - Scenes
 - Add scene
@@ -28,11 +28,11 @@ local language = "nl" -- choose fron de or en
 - Save
 - Add icon
 
-##### Virtual device
+##### Step 2. Virtual device
 In HC2:
 - Add or remove device
 - Import virtual device
-- Change the TCP Port with the UD of the scene
+- Change the TCP Port with the ID of the scene
 - Give the VD a name
 - Assign to a room
 - Save
