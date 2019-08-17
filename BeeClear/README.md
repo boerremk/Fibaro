@@ -14,7 +14,7 @@ BeeClear is virtual device that shows information from a BeeClear device.
 6. Set TCP Port to port of BeeClear device
 7. Assign room
 8. Save
-9 Change icon for every button to "BeeClear.png"
+9. Change icon for every button to "BeeClear.png"
 
 That is it!
 
