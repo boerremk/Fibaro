@@ -40,8 +40,7 @@ local zones_name = {"Room1","Room2","Room2"}; -- Name of zones of all locations,
   IP Address of the virtual device with the location ID of your Evohome system (default = 0) (See Evohome 2.0.png)\
   TCP port of the virtual device with the ID of the scene (See Evohome 2.0.png)
 - Save
-
-**REMEMBER THE ID OF THE VD, THIS HAS TO BE PUT IN THE SCENE, SEE BELOW**
+- **REMEMBER THE ID OF THE VD, THIS HAS TO BE PUT IN THE SCENE, SEE BELOW**
 
 _Repeat this step for every zones_
 
@@ -54,8 +53,8 @@ Go to step 2b if you own a Domestic Hot Water, otherwise go to step 3.
 - Edit:\
   IP Address of the virtual device with the location ID of your Evohome system (default = 0)\
   TCP port of the virtual device with the ID of the scene\
-
-**REMEMBER THE ID OF THE VD, THIS HAS TO BE PUT IN THE SCENE, SEE BELOW**
+- Save
+- **REMEMBER THE ID OF THE VD, THIS HAS TO BE PUT IN THE SCENE, SEE BELOW**
 
 _Repeat this step for every Domistic Hot Water_
 
@@ -68,8 +67,7 @@ _Repeat this step for every Domistic Hot Water_
   TCP port of the virtual device with the ID of the scene\
   The values will be update every 30 minutes (you can change this in the main loop)\
 - Save
-
-**REMEMBER THE ID OF THE VD, THIS HAS TO BE PUT IN THE SCENE, SEE BELOW**
+- **REMEMBER THE ID OF THE VD, THIS HAS TO BE PUT IN THE SCENE, SEE BELOW**
   
 ##### Step 4. Edit Evohome API scene
 - Go to Evohome API scene
