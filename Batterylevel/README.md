@@ -7,7 +7,7 @@ Batterylevel sends an email if a device needs a replacement of the battery.
 ## Installation
 ##### In HC2:
 - Go the Scenes
-- Add secene
+- Add scene
 - Add scene in lua
 - Paste the lua code
 - Give the scene a name
