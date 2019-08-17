@@ -8,10 +8,10 @@ This is a Fibaro Virtual Device (VD) that checks the status of the PostNL (Dutch
 
 ## Installation:
 
-###### PostNL account
+###### Step 1. PostNL account
   - Create an account on PostNL: https://jouw.postnl.nl/#!/registreren
 
-###### Scene
+###### Step 2. Postnl API Scene
   - Go to  Scenes
   - Add scene
   - Add scene in lua
@@ -24,7 +24,7 @@ This is a Fibaro Virtual Device (VD) that checks the status of the PostNL (Dutch
   - Save
   - Use the PostNL API.png icon as scene icon
 
-###### Virtual Device
+###### Step 3. Postnl virtual device
   - Devives
   - Add or remove device
   - Import virtual device "PostNL.vfib"
@@ -33,9 +33,10 @@ This is a Fibaro Virtual Device (VD) that checks the status of the PostNL (Dutch
   - Save
  -  Change the ICON to the PostNL.png
 
-###### Check if everything is working
-  - Go to Virtual Device and click Update button
-  - Go to scene and check log for error
+###### Step 4. Check if everything is working
+  - Go to Postnl virtual vevice
+  - Click Update button
+  - Go to scene and check debug window for any errors
   - If no errors shown, set debug to false in the scene
 
 That is it!
