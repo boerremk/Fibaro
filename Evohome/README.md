@@ -43,7 +43,7 @@ local zones_name = {"Room1","Room2","Room2"}; -- Name of zones of all locations,
 
 **REMEMBER THE ID OF THE VD, THIS HAS TO BE PUT IN THE SCENE, SEE BELOW**
 
-- Repeat this step for every zones
+_Repeat this step for every zones_
 
 Go to step 2b if you own a Domestic Hot Water, otherwise go to step 3.
 
@@ -57,7 +57,7 @@ Go to step 2b if you own a Domestic Hot Water, otherwise go to step 3.
 
 **REMEMBER THE ID OF THE VD, THIS HAS TO BE PUT IN THE SCENE, SEE BELOW**
 
-- Repeat this step for every Domistic Hot Water
+_Repeat this step for every Domistic Hot Water_
 
 ##### Step 3. Adding Main virtual device
 - Go to Devies
