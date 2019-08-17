@@ -37,7 +37,7 @@ local zones_name = {"Room1","Room2","Room2"}; -- Name of zones of all locations,
 - Import virtual deivce "Evohome_2.0_-_Zone.vfib"
 - Edit:\
   The name of the VD should match the name of the zone (case-sensitive!)\
-  IP Address of the virtual device with the location ID of youe Evohome system (default = 0) (See Evohome 2.0.png)\
+  IP Address of the virtual device with the location ID of your Evohome system (default = 0) (See Evohome 2.0.png)\
   TCP port of the virtual device with the ID of the scene (See Evohome 2.0.png)
 - Save
 
@@ -64,7 +64,7 @@ Go to step 2b if you own a Domestic Hot Water, otherwise go to step 3.
 - Add or remove devices
 - Import "Evohome_2.0.vfib" (only once!)
 - Edit:\
-  IP Address of the virtual device with the location ID of youe Evohome system (default = 0)\
+  IP Address of the virtual device with the location ID of your Evohome system (default = 0)\
   TCP port of the virtual device with the ID of the scene\
   The values will be update every 30 minutes (you can change this in the main loop)\
 - Save
