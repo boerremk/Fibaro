@@ -17,7 +17,7 @@ http://forum.fibaro.com/index.php?/topic/15232-honeywell-evohome/?p=83442
 
 ##### Scene
 - Create a LUA scene "Evohome API"
-- Paste the code from "Evohome_2.0_scene.lu"
+- Paste the code from "Evohome_2.0_scene.lua"
 - Change the following in the scene:
 ```
 local username = "EMAIL" -- Evohome username
