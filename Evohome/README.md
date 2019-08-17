@@ -36,7 +36,7 @@ local zones_name = {"Room1","Room2","Room2"}; -- Name of zones of all locations,
 - Add or remove devices
 - Import virtual deivce "Evohome_2.0_-_Zone.vfib"
 - Edit:\
-  The name off the VD should match the name of the zone (case-sensitive!)\
+  The name of the VD should match the name of the zone (case-sensitive!)\
   IP Address of the virtual device with the location ID of youe Evohome system (default = 0) (See Evohome 2.0.png)\
   TCP port of the virtual device with the ID of the scene (See Evohome 2.0.png)
 - Save
