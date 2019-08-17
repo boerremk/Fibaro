@@ -81,7 +81,7 @@ local zones_id = {171,172,173}; -- ID of all zones (in all locations)
 ```
 - Save
  
-## !!IMPORTANT!!
+## IMPORTANT
 Honeywell changed there security to there API some tome ago so you will receive the following error:
 ```
 LuaEnvironment: /home/server/bamboo-agent-home/xml-data/build-dir/HC-LE153-JOB1/LuaEngine/vendor/avhttp/avhttp/cookie.hpp:636: bool avhttp::cookies::parse_cookie_string(const string&, std::vector&): Assertion `0' failed.
