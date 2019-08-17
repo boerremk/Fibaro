@@ -15,11 +15,10 @@ http://forum.fibaro.com/index.php?/topic/15232-honeywell-evohome/?p=83442
 ## Installing
 
 
-##### Step 1. Evohome API scene
+##### Step 1. Create Evohome API scene
 - Go to Scenes
 - Add scene
 - Add scene in lua
-
 - Paste the code from "Evohome_2.0_scene.lua"
 - Change the following in the scene:
 ```
@@ -28,32 +27,59 @@ local password = "PASSWORD" -- Use your Evohome password
 local locationID = 0; -- ID of Evohome location, starting with 0 (default)
 local zones_name = {"Room1","Room2","Room2"}; -- Name of zones of all locations, DHW should be named "" (defined in Evohome, case-sensitive!)
 ```
+- Save
+
 **!!REMEMBER THE ID OF THE SCENE!!**
 
-##### Virtual devices (zones)
-- Import "Evohome_2.0_-_Zone.vfib" for every zone you need, you have to set/edit:\
+##### Step 2a. Adding zones (virtual devices)
+- Go to Devies
+- Add or remove devices
+- Import virtual deivce "Evohome_2.0_-_Zone.vfib"
+- Edit:\
   The name off the VD should match the name of the zone (case-sensitive!)\
   IP Address of the virtual device with the location ID of youe Evohome system (default = 0) (See Evohome 2.0.png)\
   TCP port of the virtual device with the ID of the scene (See Evohome 2.0.png)
-  
-**REMEMBER THE ID OF THE VD, THIS HAS TO BE PUT IN THE SCENE, SEE ABOVE**
-  
-##### Virtual device (main)
-- Import "Evohome_2.0.vfib" (only once!), you have to set/edit:
-  IP Address of the virtual device with the location ID of youe Evohome system (default = 0) (See Evohome 2.0.png)
-  TCP port of the virtual device with the ID of the scene (See Evohome 2.0.png)
-  The values will be update every 30 minutes (you can change this in the main loop)
+- Save
 
-**REMEMBER THE ID OF THE VD, THIS HAS TO BE PUT IN THE SCENE, SEE ABOVE**
+**REMEMBER THE ID OF THE VD, THIS HAS TO BE PUT IN THE SCENE, SEE BELOW**
+
+- Repeat this step for every zones
+
+Go to step 2b if you own a Domestic Hot Water, otherwise go to step 3.
+
+##### Step 2b. Adding Domistic Hot Water (virtual)  
+- Go to Devies
+- Add or remove devices
+- Import "Evohome_2.0_-_DHW.vfib"
+- Edit:\
+  IP Address of the virtual device with the location ID of youe Evohome system (default = 0)\
+  TCP port of the virtual device with the ID of the scene\
+
+**REMEMBER THE ID OF THE VD, THIS HAS TO BE PUT IN THE SCENE, SEE BELOW**
+
+- Repeat this step for every Domistic Hot Water
+
+##### Step 3. Adding Main virtual device
+- Go to Devies
+- Add or remove devices
+- Import "Evohome_2.0.vfib" (only once!)
+- Edit:\
+  IP Address of the virtual device with the location ID of youe Evohome system (default = 0)\
+  TCP port of the virtual device with the ID of the scene\
+  The values will be update every 30 minutes (you can change this in the main loop)\
+- Save
+
+**REMEMBER THE ID OF THE VD, THIS HAS TO BE PUT IN THE SCENE, SEE BELOW**
   
-##### Virtual device (Hotwater)  
-- Import "Evohome_2.0_-_DHW.vfib" for every DHW you need, you have to set/edit:
-  IP Address of the virtual device with the location ID of youe Evohome system (default = 0) (See Evohome 2.0.png)
-  TCP port of the virtual device with the ID of the scene (See Evohome 2.0.png)
-
-**REMEMBER THE ID OF THE VD, THIS HAS TO BE PUT IN THE SCENE, SEE ABOVE**
-
- 
+##### Step 4. Edit Evohome API scene
+- Go to Evohome API scene
+- Edit scene
+- Change the following in the scene:
+```
+local main_id = {170}; -- ID of Evohome VD's, one for every location, starting with the ID of location 0 
+local zones_id = {171,172,173,174,175,176,177,178}; -- ID of all zones (in all locations)
+```
+- Save
  
 ## !!IMPORTANT!!
 Honeywell changed there security to there API some tome ago so you will receive the following error:
