@@ -77,7 +77,7 @@ Go to step 2b if you own a Domestic Hot Water, otherwise go to step 3.
 - Change the following in the scene:
 ```
 local main_id = {170}; -- ID of Evohome VD's, one for every location, starting with the ID of location 0 
-local zones_id = {171,172,173,174,175,176,177,178}; -- ID of all zones (in all locations)
+local zones_id = {171,172,173}; -- ID of all zones (in all locations)
 ```
 - Save
  
