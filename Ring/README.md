@@ -3,23 +3,25 @@ Ring API is scene that checks motion and ding events.
 
 ## Requirements
 - Ring account
-- At least one Ring device
+- At least one Ring Doorbell device
 
 ## Installation
 ##### In HC2:
 - Go the Scenes
 - Add secene
 - Add scene in lua
-- Paste the lua code
+- Paste the lua code "Ring API.lua"
 - Change the lines:
 ```lua
 local username = "RING EMAIL"
 local password = "RING PASSWORD"
 ```
-- Give the scene a name
+- Name the scene "Ring API"
 - Assign it to a room
+- Set "Run scene" to manual
+- Select "Do not allow alarm to stop scene while alarm is running" 
 - Save
-- Add icon to scene
+- Add icon "ring_api.png" to scene
 
 That is it!
 
