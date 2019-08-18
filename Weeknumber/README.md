@@ -9,6 +9,7 @@ Simpel virtual device that displays the number of the week :)
 - Import virtual device
 - Change icon
 - Assign to room
+- Save
 
 That is it!
 
