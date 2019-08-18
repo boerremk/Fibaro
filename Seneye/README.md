@@ -24,7 +24,7 @@ local pwd = "SENEYE PASSWORD";
 - Change icon to "Seneye.png"
 - **Remember the ID of the scene, you need it in step 2**
 
-##### Step 2 Senye virtual device
+##### Step 2. Senye virtual device
 Create a virtual device for every Seneye you own.
 - Go to Devices
 - Add or remove device
