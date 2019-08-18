@@ -14,7 +14,7 @@ Watchdog is a Homecenter 2 scene that checks the debug windows of scenes and vir
 - Change name
 - Assign room
 - Save
-- Add icon
+- Add icon "Watchdog.png"
 
 That is it.
 
