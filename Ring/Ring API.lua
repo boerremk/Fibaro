@@ -29,16 +29,14 @@ Release notes:
   2.0.1 (20190801) Initial version
   2.1.0 (20190802) Changed to new oAuth method
   2.2.0 (20190802) Added function refreshToken. Used when token is expired.
+  2.3.0 (20190818) Set headers["Authorization"] to nil in getToken and refreshToken.
 
-To do:
-  
+To do:  
   Activate or inactive motion
   Errorhandling
 
-  
 --]]
-
-local version = "2.2.0"
+local version = "2.3.0"
 
 local OAUTH_ENDPOINT = 'https://oauth.ring.com/oauth/token'
 local API_URI = 'https://api.ring.com'
@@ -72,8 +70,9 @@ function keyValToBody(tbl)
   return tmp
 end
 
+
 function getToken(nextFunction)
-  infolog("Trying to get token...\n")
+  log("Trying to get token...")
   local url = OAUTH_ENDPOINT
   local OAUTH_DATA = {
 		["client_id"] = "ring_official_android",
@@ -84,6 +83,8 @@ function getToken(nextFunction)
   }
   local request_body = keyValToBody(OAUTH_DATA)
   local headers = headers
+  if headers["Authorization"] ~= nil then headers["Authorization"] = nil end
+  log("HEADER getToken: " .. json.encode(headers))
   local http = net.HTTPClient()
   http:request(url,{
     options = {
@@ -111,7 +112,7 @@ function getToken(nextFunction)
 end
 
 function refreshToken(token, nextFunction)
-  infolog("Trying to refresh token...\n")  
+  log("Trying to refresh token...")  
   local url = OAUTH_ENDPOINT
   local OAUTH_DATA = {
     ["client_id"] = "ring_official_android",
@@ -120,6 +121,8 @@ function refreshToken(token, nextFunction)
   }
   local request_body = keyValToBody(OAUTH_DATA)
   local headers = headers
+  if headers["Authorization"] ~= nil then headers["Authorization"] = nil end
+  log("HEADER refreshToken: " .. json.encode(headers))
   local http = net.HTTPClient()
   http:request(url,{
     options = {
@@ -147,7 +150,7 @@ function refreshToken(token, nextFunction)
 end
 
 function createSession(token, nextFunction)
-  infolog("Trying to create session...\n")  
+  log("Trying to create session...")  
   local url = API_URI .. "/clients_api/session"  
   local postData = {
     ["api_version"] = API_VERSION,
@@ -191,7 +194,7 @@ function createSession(token, nextFunction)
 end
 
 function checkEvents(token)
-  infolog("Checking....\n")  
+  log("Checking...")
   local headers = headers
   headers["Authorization"] = "Bearer " .. token["access_token"]
   local url = API_URI .. "/clients_api/dings/active"  
@@ -229,7 +232,7 @@ function checkEvents(token)
 end
 
 function getDevices()
-  infolog("Getting devices....\n") 
+  log("Getting devices...") 
   local token = fibaro:getGlobal("RingToken") 
   token = json.decode(token)
   local headers = headers
