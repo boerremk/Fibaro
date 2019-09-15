@@ -37,6 +37,7 @@ Release notes:
   0.0.6 (20181228) Some issues with special packages solved, sender information was not present
   0.0.7 (20181228) Added variable limit, to limit the results presented.
   1.0.0 (20190813) Fixed bug if limit is higher then the amount of parcels returned by Postnl
+  1.1.0 (20190915) Changed way to define data in getToken
 
 To do:
   updateVD: expected date?
@@ -45,7 +46,7 @@ To do:
 
   
 --]]
-local version = "1.0.0"
+local version = "1.1.0"
 
 baseUrl = "https://jouw.postnl.nl/web/";
 apiUrl = baseUrl.."api/default/";
@@ -70,15 +71,36 @@ function makeTimeStamp(dateString)
     return convertedTimestamp + offset
 end
 
+function keyValToBody(tbl)
+  -- Turn key/value pairs into key1=value1&key2&value2&...
+  -- And encode each key and value to remove spaces, & etcetera.
+  local tmp
+  for k,v in pairs(tbl) do
+    if tmp then
+      tmp=tmp.."&"..urlencode(k).."="..urlencode(v)
+    else
+      tmp=urlencode(k).."="..urlencode(v)
+    end
+  end
+  return tmp
+end
+
 function getToken(username, password, clientId, main_id, path)
-  data = "username="..username.."&password="..password.."&client_id="..clientId.."&grant_type=password"
+  local data = {
+		["username"] = username,
+		["password"] = password,
+		["client_id"] = clientId,
+		["grant_type"] = "password"
+  }
+--  data = "username="..username.."&password="..password.."&client_id="..clientId.."&grant_type=password"
   http:request(tokenUrl, { 
     options = { 
       method = 'POST', 
       headers = {
-        ["Content-Type"] = "application/x-www-form-urlencoded"      
+        ["Content-Type"] = "application/x-www-form-urlencoded",
+        ["Accept"] = "application/json, text/plain, */*"
 	  },
-      data = data, 
+      data = keyValToBody(data), 
       timeout = 5000
     }, 
     success = function(status)
